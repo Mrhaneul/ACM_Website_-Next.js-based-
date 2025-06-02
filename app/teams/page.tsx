@@ -1,9 +1,11 @@
-// app/teams/page.tsx
 import Image from "next/image";
 import styles from "./teams.module.css";
+import Navbar from "../components/Navbar";
 
 export default function TeamsPage() {
   return (
+		<>
+			<Navbar />
     <main className={styles.main}>
       <h1 className={styles.teamOverviewTitle}>Our Teams</h1>
 
@@ -94,5 +96,6 @@ export default function TeamsPage() {
 
       {/* Repeat for CCDC and SET sections... */}
     </main>
+		</>
   );
 }
