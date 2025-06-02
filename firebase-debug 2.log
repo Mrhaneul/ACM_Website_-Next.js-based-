@@ -1,0 +1,16 @@
+[debug] [2025-06-02T15:55:36.778Z] ----------------------------------------------------------------------
+[debug] [2025-06-02T15:55:36.782Z] Command:       /Users/joeyrussell/.nvm/versions/node/v20.19.0/bin/node /Users/joeyrussell/.nvm/versions/node/v20.19.0/bin/firebase serve
+[debug] [2025-06-02T15:55:36.782Z] CLI Version:   14.1.0
+[debug] [2025-06-02T15:55:36.783Z] Platform:      darwin
+[debug] [2025-06-02T15:55:36.783Z] Node Version:  v20.19.0
+[debug] [2025-06-02T15:55:36.783Z] Time:          Mon Jun 02 2025 08:55:36 GMT-0700 (Pacific Daylight Time)
+[debug] [2025-06-02T15:55:36.783Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-06-02T15:55:36.874Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-02T15:55:36.875Z] > authorizing via signed-in user (softwaredevcbu@gmail.com)
+[debug] [2025-06-02T15:55:36.875Z] [iam] checking project acm-website-459ef for permissions ["firebase.projects.get"]
+[debug] [2025-06-02T15:55:36.875Z] Checked if tokens are valid: true, expires at: 1748882475902
+[debug] [2025-06-02T15:55:36.875Z] Checked if tokens are valid: true, expires at: 1748882475902
+[debug] [2025-06-02T15:55:36.875Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef:testIamPermissions [none]
+[debug] [2025-06-02T15:55:36.875Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef:testIamPermissions x-goog-quota-user=projects/acm-website-459ef
+[debug] [2025-06-02T15:55:36.876Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef:testIamPermissions {"permissions":["firebase.projects.get"]}

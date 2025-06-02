@@ -5,18 +5,15 @@ const Navbar = () => {
     return (
         <nav className='bg-white text-black p-2 border-b-[6px] border-[#004AAD]'>
             <div className='container mx-auto flex justify-between items-center'>
-
                 <Link href="/" className="flex items-center space-x-2">
                     <Image src="/acm.png" alt="ACM Logo" width={80} height={80}/>
                     <span className="text-xl font-black">Association for <br/> Computing Machinery</span>
                 </Link>
-
                 <ul className="flex items-center space-x-6">
                     {[
                         { href: '/', label: 'Home' },
                         { href: '/teams', label: 'Teams' },
                         { href: '/about', label: 'About' },
-
                     ].map(({ href, label }) => (
                         <li
                             key={href}
@@ -27,6 +24,15 @@ const Navbar = () => {
                             </Link>
                         </li>
                     ))}
+                    
+                    <li>
+                        <Link
+                            href="/login"
+                            className="bg-[#58cbf7] hover:bg-[#004AAD] text-white font-semibold py-2 px-4 rounded-[8px] transition mr-3"
+                        >
+                            Sign Up
+                        </Link>
+                    </li>
 
                     <li>
                         <Link
@@ -42,4 +48,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar; 
+export default Navbar;

@@ -1,0 +1,673 @@
+/* signup.module.css */
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.campus {
+  background-color: white;
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  position: relative;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.authContainer {
+  width: 100%;
+  max-width: 440px;
+  animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  margin: auto;
+}
+
+.authCard {
+  background: white;
+  padding: 2.25rem;
+  border-radius: 20px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 74, 173, 0.15),
+    0 0 0 1px rgba(0, 74, 173, 0.05);
+  border: 1px solid rgba(0, 74, 173, 0.08);
+  position: relative;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.authCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #004AAD, #58cbf7, #004AAD);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Progress Animation Styles */
+.progressContainer {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progressCircle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: drop-shadow(0 0 8px rgba(0, 74, 173, 0.3));
+}
+
+.progressBg {
+  fill: none;
+  stroke: #e5e7eb;
+  stroke-width: 6;
+  opacity: 0.3;
+}
+
+.progressFill {
+  fill: none;
+  stroke: url(#liquidGradient);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: liquidFlow 3s ease-in-out infinite;
+}
+
+.acmText {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 2px;
+  font-family: 'League Spartan', Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: #004AAD;
+}
+
+.acmLetter {
+  opacity: 0;
+  transform: scale(0) rotate(180deg);
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  filter: drop-shadow(0 2px 4px rgba(0, 74, 173, 0.2));
+}
+
+.acmLetter.visible {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  animation: letterPulse 2s ease-in-out infinite;
+}
+
+.progressText {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-align: center;
+  min-height: 1.25rem;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+}
+
+.title {
+  font-family: 'League Spartan', Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #004AAD;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  animation: titleSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0;
+  animation: subtitleSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: formSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+}
+
+.nameFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.nameFields .inputGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevents overflow issues */
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white;
+  position: relative;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #004AAD;
+  box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.1);
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+}
+
+.input:hover:not(:focus) {
+  border-color: #58cbf7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(88, 203, 247, 0.15);
+}
+
+.error {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  text-align: center;
+  animation: shakeError 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* Email Verification Screen */
+.emailVerificationContainer {
+  width: 100%;
+  max-width: 500px;
+  animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  margin: auto;
+}
+
+.emailAnimation {
+  background: white;
+  padding: 3rem 2.5rem;
+  border-radius: 24px;
+  text-align: center;
+  width: 100%;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 74, 173, 0.15),
+    0 0 0 1px rgba(0, 74, 173, 0.05);
+  border: 1px solid rgba(0, 74, 173, 0.08);
+  animation: emailSlideUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.emailIcon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, #004AAD, #58cbf7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: emailIconBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s both;
+}
+
+.emailSvg {
+  width: 40px;
+  height: 40px;
+  color: white;
+}
+
+.checkCircle {
+  animation: checkCircleGrow 0.5s ease-out 1s both;
+}
+
+.checkMark {
+  stroke-dasharray: 4;
+  stroke-dashoffset: 4;
+}
+
+.emailTitle {
+  font-family: 'League Spartan', Arial, Helvetica, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #004AAD;
+  margin-bottom: 1rem;
+  animation: textSlideIn 0.5s ease-out 0.4s both;
+}
+
+.emailText {
+  color: #6b7280;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  animation: textSlideIn 0.5s ease-out 0.6s both;
+}
+
+.emailSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.emailStep {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #f8faff;
+  border-radius: 12px;
+  animation: stepSlideIn 0.5s ease-out both;
+}
+
+.emailStep:nth-child(1) { animation-delay: 0.8s; }
+.emailStep:nth-child(2) { animation-delay: 1s; }
+.emailStep:nth-child(3) { animation-delay: 1.2s; }
+
+.stepNumber {
+  width: 24px;
+  height: 24px;
+  background: #004AAD;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.backToLoginButton {
+  background: linear-gradient(135deg, #004AAD 0%, #0056cc 100%);
+  color: white;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: textSlideIn 0.5s ease-out 1.4s both;
+}
+
+.backToLoginButton:hover {
+  background: linear-gradient(135deg, #003a8c 0%, #004AAD 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 74, 173, 0.4);
+}
+
+.success {
+  background-color: #d1fae5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  text-align: center;
+  animation: slideDown 0.5s ease-out;
+}
+
+.submitButton {
+  background: linear-gradient(135deg, #004AAD 0%, #0056cc 100%);
+  color: white;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: 0.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.submitButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, #003a8c 0%, #004AAD 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 74, 173, 0.4);
+}
+
+.submitButton:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+  transition: transform 0.1s;
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.switchAuth {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.switchAuth p {
+  color: #6b7280;
+  margin: 0;
+}
+
+.switchButton {
+  background: none;
+  border: none;
+  color: #004AAD;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+
+.switchButton:hover {
+  color: #003a8c;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes emailSlideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes emailIconBounce {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes textSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stepSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes checkCircleGrow {
+  from { r: 0; }
+  to { r: 3; }
+}
+
+@keyframes liquidFlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(0, 74, 173, 0.3));
+  }
+  25% {
+    filter: drop-shadow(0 0 12px rgba(88, 203, 247, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(0, 74, 173, 0.5));
+  }
+  75% {
+    filter: drop-shadow(0 0 12px rgba(88, 203, 247, 0.6));
+  }
+}
+
+@keyframes letterPulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 2px 4px rgba(0, 74, 173, 0.2));
+  }
+  50% {
+    transform: scale(1.1) rotate(0deg);
+    filter: drop-shadow(0 4px 8px rgba(88, 203, 247, 0.4));
+  }
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes titleSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtitleSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes formSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shakeError {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-8px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .overlay {
+    padding: 0.5rem;
+    min-height: auto;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+  
+  .authContainer {
+    max-width: 360px;
+  }
+  
+  .authCard {
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .nameFields {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .authContainer {
+    max-width: 320px;
+  }
+  
+  .authCard {
+    padding: 1.25rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .nameFields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .nameFields {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .overlay {
+    align-items: flex-start;
+    padding-top: 1rem;
+  }
+  
+  .main {
+    padding: 1rem 0;
+  }
+}
