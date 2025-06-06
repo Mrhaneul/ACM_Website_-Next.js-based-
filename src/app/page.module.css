@@ -1,23 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
 
 .campus {
-  background-image: url('/home.png');
+  background-image: linear-gradient(135deg, rgba(0, 74, 173, 0.8), rgba(88, 203, 247, 0.7)), url('/home.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
-/* To create a semi-transparent overlay on the campus image */
+/* Enhanced overlay with gradient */
 .overlay {
   position: absolute;
-  inset: 0; /* Top, right, bottom, left = 0 */
-  background-color: rgba(255, 255, 255, 0.5); /* white with 70% opacity */
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 74, 173, 0.6) 0%,
+    rgba(88, 203, 247, 0.4) 50%,
+    rgba(0, 74, 173, 0.7) 100%
+  );
   display: flex;
-  align-items: flex-start;  /* To align content to the top */
-  justify-content: flex-start; /* To align content to the left */
-  padding: 4rem; /* Add some padding */
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+/* Add subtle animation effects */
+.overlay::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 70%
+  );
+  animation: shimmer 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  50% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
 }
 
 @keyframes fadeSlideIn {
@@ -33,4 +69,38 @@
 
 .titleAnimated {
   animation: fadeSlideIn 1s ease-out forwards;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  .campus {
+    background-attachment: scroll;
+  }
+  
+  .overlay {
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay {
+    padding: 1rem;
+  }
+}
+
+/* Additional utility classes for enhanced design */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #004AAD, #58cbf7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

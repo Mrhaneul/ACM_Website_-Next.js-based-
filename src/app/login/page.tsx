@@ -1,11 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../lib/firebase';
+import { UserProfile } from '../../types/dashboard';
 import styles from './page.module.css';
 
 export default function SignupPage() {
+  const router = useRouter();
+  const [user, loading] = useAuthState(auth);
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -14,11 +20,17 @@ export default function SignupPage() {
     firstName: '',
     lastName: ''
   });
-  const [loading, setLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-
   const [showEmailVerification, setShowEmailVerification] = useState(false);
+
+  // Redirect to dashboard if user is already logged in
+  useEffect(() => {
+    if (user && user.emailVerified) {
+      router.push('/dashboard');
+    }
+  }, [user, router]);
 
   // Calculate progress percentage
   const getFormCompletion = () => {
@@ -27,9 +39,6 @@ export default function SignupPage() {
     const fields = ['firstName', 'lastName', 'email', 'password', 'confirmPassword'];
     const filledFields = fields.filter(field => formData[field].trim() !== '');
     const completion = (filledFields.length / fields.length) * 100;
-    
-    // Debug log to see the progress
-    console.log('Form completion:', completion, 'Filled fields:', filledFields.length, 'Total fields:', fields.length);
     
     return completion;
   };
@@ -43,17 +52,54 @@ export default function SignupPage() {
     });
     setError('');
     setSuccess('');
-    setShowEmailVerification(false); // Reset email verification when typing
+    setShowEmailVerification(false);
+  };
+
+  const createUserProfile = async (user: any, firstName: string, lastName: string) => {
+    try {
+      const defaultProfile: UserProfile = {
+        uid: user.uid,
+        email: user.email || '',
+        firstName: firstName,
+        lastName: lastName,
+        role: 'member',
+        major: '',
+        graduationYear: '',
+        bio: '',
+        skills: [],
+        githubUsername: '',
+        linkedinUrl: '',
+        profileImage: '',
+        courses: [],
+        commits: 0,
+        joinDate: new Date().toISOString(),
+        settings: {
+          emailUpdates: true,
+          profileVisible: true,
+          showCommits: true,
+          showEmail: false,
+          showCourses: true,
+          projectInvites: true,
+          weeklyDigest: false,
+          commitReminders: true
+        }
+      };
+      
+      await setDoc(doc(db, 'users', user.uid), defaultProfile);
+    } catch (error) {
+      console.error('Error creating user profile:', error);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setFormLoading(true);
     setError('');
     setSuccess('');
 
     try {
       if (isSignup) {
+        // Signup flow
         if (formData.password !== formData.confirmPassword) {
           throw new Error('Passwords do not match');
         }
@@ -67,6 +113,10 @@ export default function SignupPage() {
           formData.password
         );
         
+        // Create user profile in Firestore
+        await createUserProfile(userCredential.user, formData.firstName, formData.lastName);
+        
+        // Send email verification
         await sendEmailVerification(userCredential.user);
         
         // Show email verification animation
@@ -87,6 +137,7 @@ export default function SignupPage() {
         });
         
       } else {
+        // Login flow
         const userCredential = await signInWithEmailAndPassword(
           auth,
           formData.email,
@@ -98,8 +149,9 @@ export default function SignupPage() {
           return;
         }
         
-        setSuccess('Successfully logged in!');
+        setSuccess('Successfully logged in! Redirecting to dashboard...');
         
+        // Clear form
         setFormData({
           email: '',
           password: '',
@@ -107,11 +159,44 @@ export default function SignupPage() {
           firstName: '',
           lastName: ''
         });
+
+        // Redirect to dashboard after a brief delay
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1500);
       }
     } catch (err: any) {
-      setError(err.message || 'An error occurred');
+      console.error('Authentication error:', err);
+      
+      // Handle specific Firebase auth errors
+      let errorMessage = 'An error occurred';
+      
+      switch (err.code) {
+        case 'auth/user-not-found':
+          errorMessage = 'No account found with this email address.';
+          break;
+        case 'auth/wrong-password':
+          errorMessage = 'Incorrect password.';
+          break;
+        case 'auth/email-already-in-use':
+          errorMessage = 'An account with this email already exists.';
+          break;
+        case 'auth/weak-password':
+          errorMessage = 'Password should be at least 6 characters.';
+          break;
+        case 'auth/invalid-email':
+          errorMessage = 'Please enter a valid email address.';
+          break;
+        case 'auth/too-many-requests':
+          errorMessage = 'Too many failed attempts. Please try again later.';
+          break;
+        default:
+          errorMessage = err.message || 'An error occurred';
+      }
+      
+      setError(errorMessage);
     } finally {
-      setLoading(false);
+      setFormLoading(false);
     }
   };
 
@@ -129,7 +214,6 @@ export default function SignupPage() {
     setShowEmailVerification(false);
     setError('');
     setSuccess('');
-    // Reset form when switching modes
     setFormData({
       email: '',
       password: '',
@@ -138,6 +222,37 @@ export default function SignupPage() {
       lastName: ''
     });
   };
+
+  // Show loading spinner while checking auth state
+  if (loading) {
+    return (
+      <main className={styles.main}>
+        <div className={styles.campus}>
+          <div className={styles.overlay}>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '50vh',
+              color: '#004AAD'
+            }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                border: '4px solid #e5e7eb',
+                borderTop: '4px solid #004AAD',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                marginBottom: '1rem'
+              }}></div>
+              <p>Checking authentication...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className={styles.main}>
@@ -182,7 +297,7 @@ export default function SignupPage() {
                 <button 
                   onClick={() => {
                     setShowEmailVerification(false);
-                    setIsSignup(false); // Switch to login mode
+                    setIsSignup(false);
                     setFormData({
                       email: '',
                       password: '',
@@ -208,7 +323,7 @@ export default function SignupPage() {
                   <p className={styles.subtitle}>
                     {isSignup 
                       ? 'Create your account to get started' 
-                      : 'Login to your account'
+                      : 'Login to access your dashboard'
                     }
                   </p>
                   
@@ -372,10 +487,10 @@ export default function SignupPage() {
                   <button
                     type="submit"
                     className={styles.submitButton}
-                    disabled={loading}
+                    disabled={formLoading}
                   >
-                    {loading 
-                      ? 'Processing...' 
+                    {formLoading 
+                      ? (isSignup ? 'Creating Account...' : 'Signing In...') 
                       : isSignup 
                         ? 'Create Account' 
                         : 'Login'
@@ -400,6 +515,13 @@ export default function SignupPage() {
           )}
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </main>
   );
 }
