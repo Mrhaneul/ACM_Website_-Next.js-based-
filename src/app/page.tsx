@@ -78,69 +78,62 @@ export default function Home() {
     <>
       {/* HERO SECTION */}
       <main ref={ref} className={styles.campus}>
-        <motion.div
-          className={styles.overlay}
-          style={shouldReduceMotion ? {} : { y, opacity }}
-        >
-          <div className="w-full flex justify-center">
-            <div className="text-center px-4 max-w-5xl w-full">
-              <motion.div
-                initial={
-                  shouldReduceMotion ? false : { opacity: 0, scale: 0.95 }
-                }
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: shouldReduceMotion ? 0 : 0.8 }}
+        <motion.div className={styles.overlay} style={{ y, opacity }}>
+          <div className="text-center px-4 max-w-5xl mx-auto">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.8 }}
+            >
+              <motion.h1
+                {...fadeInUp}
+                transition={{
+                  ...fadeInUp.transition,
+                  delay: shouldReduceMotion ? 0 : 0.2,
+                }}
+                className="text-5xl md:text-8xl font-black text-white leading-tight mb-8"
               >
-                <motion.h1
-                  {...fadeInUp}
-                  transition={{
-                    ...fadeInUp.transition,
-                    delay: shouldReduceMotion ? 0 : 0.2,
-                  }}
-                  className="text-5xl md:text-8xl font-black text-white leading-tight mb-8"
-                >
-                  Association for
-                  <br />
-                  <span className="text-[#58cbf7]">Computing</span>
-                  <br />
-                  Machinery
-                </motion.h1>
+                Association for
+                <br />
+                <span className="text-[#58cbf7]">Computing</span>
+                <br />
+                Machinery
+              </motion.h1>
 
-                <motion.p
-                  {...fadeInUp}
-                  transition={{
-                    ...fadeInUp.transition,
-                    delay: shouldReduceMotion ? 0 : 0.4,
-                  }}
-                  className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto"
-                >
-                  Empowering the next generation of computer scientists at
-                  California Baptist University
-                </motion.p>
+              <motion.p
+                {...fadeInUp}
+                transition={{
+                  ...fadeInUp.transition,
+                  delay: shouldReduceMotion ? 0 : 0.4,
+                }}
+                className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto"
+              >
+                Empowering the next generation of computer scientists at
+                California Baptist University
+              </motion.p>
 
-                <motion.div
-                  {...fadeInUp}
-                  transition={{
-                    ...fadeInUp.transition,
-                    delay: shouldReduceMotion ? 0 : 0.6,
-                  }}
-                  className="flex flex-col sm:flex-row gap-6 justify-center"
+              <motion.div
+                {...fadeInUp}
+                transition={{
+                  ...fadeInUp.transition,
+                  delay: shouldReduceMotion ? 0 : 0.6,
+                }}
+                className="flex flex-col sm:flex-row gap-6 justify-center"
+              >
+                <Link
+                  href="/login"
+                  className="group relative bg-[#58cbf7] hover:bg-[#004AAD] text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
                 >
-                  <Link
-                    href="/login"
-                    className="group relative bg-[#58cbf7] hover:bg-[#004AAD] text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
-                  >
-                    <span className="relative z-10">Join ACM Today</span>
-                  </Link>
-                  <Link
-                    href="/teams"
-                    className="group border-3 border-white text-white hover:bg-white hover:text-[#004AAD] font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105"
-                  >
-                    Explore Teams
-                  </Link>
-                </motion.div>
+                  <span className="relative z-10">Join ACM Today</span>
+                </Link>
+                <Link
+                  href="/teams"
+                  className="group border-3 border-white text-white hover:bg-white hover:text-[#004AAD] font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105"
+                >
+                  Explore Teams
+                </Link>
               </motion.div>
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       </main>
