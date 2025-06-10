@@ -1,0 +1,58 @@
+[debug] [2025-06-09T03:52:00.303Z] ----------------------------------------------------------------------
+[debug] [2025-06-09T03:52:00.307Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\haneu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2025-06-09T03:52:00.307Z] CLI Version:   14.6.0
+[debug] [2025-06-09T03:52:00.307Z] Platform:      win32
+[debug] [2025-06-09T03:52:00.307Z] Node Version:  v20.17.0
+[debug] [2025-06-09T03:52:00.307Z] Time:          Sun Jun 08 2025 20:52:00 GMT-0700 (Pacific Daylight Time)
+[debug] [2025-06-09T03:52:00.308Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-06-09T03:52:00.568Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-09T03:52:00.568Z] > authorizing via signed-in user (softwaredevcbu@gmail.com)
+[debug] [2025-06-09T03:52:00.569Z] [iam] checking project acm-website-459ef for permissions ["firebase.projects.get"]
+[debug] [2025-06-09T03:52:00.569Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:00.569Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:00.570Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef:testIamPermissions [none]
+[debug] [2025-06-09T03:52:00.571Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef:testIamPermissions x-goog-quota-user=projects/acm-website-459ef
+[debug] [2025-06-09T03:52:00.571Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-06-09T03:52:00.846Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef:testIamPermissions 200
+[debug] [2025-06-09T03:52:00.847Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-06-09T03:52:00.847Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:00.848Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:00.848Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/acm-website-459ef/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-06-09T03:52:00.848Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/acm-website-459ef/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/acm-website-459ef
+[debug] [2025-06-09T03:52:01.252Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/acm-website-459ef/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-06-09T03:52:01.252Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/acm-website-459ef/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-06-09T03:52:01.252Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:01.252Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:01.252Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef [none]
+[debug] [2025-06-09T03:52:01.460Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef 200
+[debug] [2025-06-09T03:52:01.460Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/acm-website-459ef {"projectNumber":"1031361398430","projectId":"acm-website-459ef","lifecycleState":"ACTIVE","name":"ACM-Website","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-22T23:14:09.876859Z"}
+[info] 
+[info] === Serving from 'C:\Users\haneu\OneDrive - California Baptist University\Desktop\CBU\CBU_Clubs\SET\firebase-outline\acm-website'...
+[info] 
+[debug] [2025-06-09T03:52:01.469Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:01.469Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:01.469Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/acm-website-459ef [none]
+[debug] [2025-06-09T03:52:01.654Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/acm-website-459ef 200
+[debug] [2025-06-09T03:52:01.655Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/acm-website-459ef {"projectId":"acm-website-459ef","projectNumber":"1031361398430","displayName":"ACM-Website","name":"projects/acm-website-459ef","resources":{"hostingSite":"acm-website-459ef"},"state":"ACTIVE","etag":"1_a976b147-7091-44e2-9a0b-504d54e71bbc"}
+[debug] [2025-06-09T03:52:03.745Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:03.746Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:03.746Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/acm-website-459ef/sites pageToken=&pageSize=10
+[debug] [2025-06-09T03:52:04.499Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/acm-website-459ef/sites 200
+[debug] [2025-06-09T03:52:04.499Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/acm-website-459ef/sites {"sites":[{"name":"projects/acm-website-459ef/sites/acm-website-459ef","defaultUrl":"https://acm-website-459ef.web.app","appId":"1:1031361398430:web:640c75bab8e4890e571d8f","type":"DEFAULT_SITE"}]}
+[debug] [2025-06-09T03:52:04.500Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:04.500Z] Checked if tokens are valid: true, expires at: 1749443245636
+[debug] [2025-06-09T03:52:04.501Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:1031361398430:web:640c75bab8e4890e571d8f/config [none]
+[debug] [2025-06-09T03:52:04.965Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:1031361398430:web:640c75bab8e4890e571d8f/config 200
+[debug] [2025-06-09T03:52:04.965Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:1031361398430:web:640c75bab8e4890e571d8f/config {"projectId":"acm-website-459ef","appId":"1:1031361398430:web:640c75bab8e4890e571d8f","storageBucket":"acm-website-459ef.firebasestorage.app","apiKey":"AIzaSyBDQCiezLzLfEUIu8TyIZ7lXnZCguwA2j4","authDomain":"acm-website-459ef.firebaseapp.com","messagingSenderId":"1031361398430","measurementId":"G-Z5LVR2ETCZ"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+

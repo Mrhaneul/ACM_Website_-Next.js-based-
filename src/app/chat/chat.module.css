@@ -1,0 +1,101 @@
+.chatContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, rgba(0, 74, 173, 0.85), rgba(88, 203, 247, 0.85)), url('/home.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.chatBox {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  max-width: 700px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.chatHeader {
+  padding: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: rgba(0, 74, 173, 0.8);
+  color: white;
+  text-align: center;
+}
+
+.messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  max-width: 75%;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.user {
+  align-self: flex-end;
+  background-color: #58cbf7;
+  color: white;
+}
+
+.ai {
+  align-self: flex-start;
+  background-color: #ffffff;
+  color: #004AAD;
+  border: 1px solid rgba(0, 74, 173, 0.2);
+}
+
+.inputArea {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: white;
+  color: #004AAD;
+}
+
+.sendButton {
+  margin-left: 0.75rem;
+  background-color: #004AAD;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.sendButton:hover {
+  background-color: #58cbf7;
+}
