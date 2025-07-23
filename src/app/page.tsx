@@ -10,6 +10,7 @@ import {
 import { useRef } from "react";
 import Link from "next/link";
 import { FaTrophy, FaShieldAlt, FaCode, FaArrowRight } from "react-icons/fa";
+import TextType from "@/src/components/TextType";
 
 export default function Home() {
   const ref = useRef(null);
@@ -93,11 +94,36 @@ export default function Home() {
                 }}
                 className="text-5xl md:text-8xl font-black text-white leading-tight mb-8"
               >
-                Association for
+                <TextType
+                  text="Association for"
+                  as="span"
+                  typingSpeed={75}
+                  loop={false}
+                  showCursor={false}
+                  initialDelay={shouldReduceMotion ? 0 : 800}
+                />
                 <br />
-                <span className="text-[#58cbf7]">Computing</span>
+                <span className="text-[#58cbf7]">
+                  <TextType
+                    text="Computing"
+                    as="span"
+                    typingSpeed={75}
+                    loop={false}
+                    showCursor={false}
+                    initialDelay={shouldReduceMotion ? 0 : 1500}
+                  />
+                </span>
                 <br />
-                Machinery
+                <TextType
+                  text="Machinery"
+                  as="span"
+                  typingSpeed={75}
+                  loop={false}
+                  showCursor={true}
+                  cursorCharacter="|"
+                  cursorClassName="text-[#58cbf7]"
+                  initialDelay={shouldReduceMotion ? 0 : 2200}
+                />
               </motion.h1>
 
               <motion.p
@@ -139,11 +165,11 @@ export default function Home() {
       </main>
 
       {/* TEAMS PREVIEW SECTION */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative">
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative z-10">
         {/* Simplified background elements */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-cyan-400/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-cyan-400/5 z-0"></div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-20">
           <motion.div
             {...fadeInUp}
             viewport={{ once: true, margin: "-100px" }}
@@ -257,8 +283,8 @@ export default function Home() {
       </section>
 
       {/* CALL TO ACTION */}
-      <section className="py-20 bg-gradient-to-r from-[#004AAD] to-[#58cbf7] text-white relative">
-        <div className="container mx-auto px-4 text-center relative z-10">
+      <section className="py-20 bg-gradient-to-r from-[#004AAD] to-[#58cbf7] text-white relative z-10">
+        <div className="container mx-auto px-4 text-center relative z-20">
           <motion.div {...fadeInUp} viewport={{ once: true }}>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Ready to Join the Future?
@@ -278,22 +304,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Simplified Scroll Indicator */}
-      {!shouldReduceMotion && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50"
-        >
-          <div className="text-white/70 text-center">
-            <div className="text-sm mb-2">Scroll to explore</div>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M7 10l5 5 5-5z" />
-            </svg>
-          </div>
-        </motion.div>
-      )}
     </>
   );
 }

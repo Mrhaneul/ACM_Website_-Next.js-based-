@@ -5,22 +5,15 @@ import React from "react";
 const CCDC_Section = () => {
   return (
     <>
-			<section id="ccdc" className={`${styles.teamSection} ${styles.active}`}>
+			<section className={`${styles.teamSection} ${styles.active}`}>
         <h3 className={styles.teamSectionTitle}>CCDC Members</h3>
         <p className={styles.teamDescription}>
-          The ICPC, or International Collegiate Programming Contest, is a global
-          competitive programming competition...
+          The Collegiate Cyber Defense Competition (CCDC) is a cybersecurity competition where students defend network infrastructures against red team attacks while maintaining business operations and services.
         </p>
         <div className={styles.memberGrid}>
           <div className={styles.memberCard}>
             <div className={styles.avatar}>
-              <Image
-                src="/profile.png"
-                alt="CCDC Member"
-                width={250}
-                height={250}
-                className={styles.memberImage}
-              />
+              <i className="bi bi-person-circle"></i>
             </div>
             <p className={styles.name}>Firstname Last</p>
             <div className={styles.gradEmail}>
@@ -29,13 +22,7 @@ const CCDC_Section = () => {
                 href="mailto:test@example.com"
                 className={styles.emailIconContainer}
               >
-                <Image
-                  src="/EMAIL_ICON.png"
-                  alt="email"
-                  width={16}
-                  height={16}
-                  className={styles.emailIcon}
-                />
+                <i className="bi bi-envelope-fill" style={{color: 'white', fontSize: '1rem'}}></i>
               </a>
             </div>
           </div>

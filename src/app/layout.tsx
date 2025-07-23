@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import ConditionalLayout from '../components/Layout/ConditionalLayout';
 import '../lib/fontAwesome';
 

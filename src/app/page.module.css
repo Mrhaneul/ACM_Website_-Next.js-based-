@@ -5,11 +5,12 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
   min-height: 100vh;
   position: relative;
   display: flex;
   align-items: center;
+  z-index: 1;
 }
 
 /* Enhanced overlay with gradient */
@@ -30,7 +31,7 @@
     rgba(88, 203, 247, 0.4) 50%,
     rgba(0, 74, 173, 0.7) 100%
   );
-  z-index: 10;
+  z-index: 2;
   text-align: center;
 }
 
@@ -52,6 +53,7 @@
   );
   animation: shimmer 6s ease-in-out infinite;
   pointer-events: none;
+  z-index: -1;
 }
 
 @keyframes shimmer {
