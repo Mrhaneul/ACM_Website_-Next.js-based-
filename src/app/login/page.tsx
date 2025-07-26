@@ -178,6 +178,9 @@ export default function SignupPage() {
         case 'auth/wrong-password':
           errorMessage = 'Incorrect password.';
           break;
+        case 'auth/invalid-credential':
+          errorMessage = 'Invalid email or password. Please check your credentials.';
+          break;
         case 'auth/email-already-in-use':
           errorMessage = 'An account with this email already exists.';
           break;

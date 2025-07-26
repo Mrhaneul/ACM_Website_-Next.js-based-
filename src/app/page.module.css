@@ -33,6 +33,7 @@
   );
   z-index: 2;
   text-align: center;
+  overflow: hidden;
 }
 
 
@@ -112,4 +113,136 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Blob Button Styles */
+.blobBtn {
+  z-index: 1;
+  position: relative;
+  padding: 20px 46px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #58cbf7;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  transition: color 0.5s;
+  cursor: pointer;
+  border-radius: 30px;
+  display: inline-block;
+}
+
+.blobBtn:before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #58cbf7;
+  border-radius: 30px;
+}
+
+.blobBtn:after {
+  content: "";
+  z-index: -2;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s 0.2s;
+  border-radius: 30px;
+}
+
+.blobBtn:hover {
+  color: #ffffff;
+  border-radius: 30px;
+}
+
+.blobBtn:hover:after {
+  transition: all 0.3s;
+  left: 0;
+  top: 0;
+  border-radius: 30px;
+}
+
+.blobBtnInner {
+  z-index: -1;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  background: #ffffff;
+}
+
+.blobBtnBlobs {
+  position: relative;
+  display: block;
+  height: 100%;
+  filter: url('#goo');
+}
+
+.blobBtnBlob {
+  position: absolute;
+  top: 2px;
+  width: 25%;
+  height: 100%;
+  background: #58cbf7;
+  border-radius: 100%;
+  transform: translate3d(0, 150%, 0) scale(1.7);
+  transition: transform 0.45s;
+}
+
+.blobBtnBlob:nth-child(1) {
+  left: 0%;
+  transition-delay: 0s;
+}
+
+.blobBtnBlob:nth-child(2) {
+  left: 30%;
+  transition-delay: 0.08s;
+}
+
+.blobBtnBlob:nth-child(3) {
+  left: 60%;
+  transition-delay: 0.16s;
+}
+
+.blobBtnBlob:nth-child(4) {
+  left: 90%;
+  transition-delay: 0.24s;
+}
+
+.blobBtn:hover .blobBtnBlob {
+  transform: translateZ(0) scale(1.7);
+}
+
+@supports(filter: url('#goo')) {
+  .blobBtnBlob {
+    transform: translate3d(0, 150%, 0) scale(1.4);
+  }
+  
+  .blobBtn:hover .blobBtnBlob {
+    transform: translateZ(0) scale(1.4);
+  }
+}
+
+/* Secondary blob button variant */
+.blobBtnSecondary {
+  color: #004AAD;
+}
+
+.blobBtnSecondary:before {
+  border-color: #004AAD;
+}
+
+.blobBtnSecondary .blobBtnBlob {
+  background: #004AAD;
 }

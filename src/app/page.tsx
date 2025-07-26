@@ -101,6 +101,8 @@ export default function Home() {
                   loop={false}
                   showCursor={false}
                   initialDelay={shouldReduceMotion ? 0 : 800}
+                  variableSpeed={undefined}
+                  onSentenceComplete={undefined}
                 />
                 <br />
                 <span className="text-[#58cbf7]">
@@ -111,6 +113,8 @@ export default function Home() {
                     loop={false}
                     showCursor={false}
                     initialDelay={shouldReduceMotion ? 0 : 1500}
+                    variableSpeed={undefined}
+                    onSentenceComplete={undefined}
                   />
                 </span>
                 <br />
@@ -123,6 +127,8 @@ export default function Home() {
                   cursorCharacter="|"
                   cursorClassName="text-[#58cbf7]"
                   initialDelay={shouldReduceMotion ? 0 : 2200}
+                  variableSpeed={undefined}
+                  onSentenceComplete={undefined}
                 />
               </motion.h1>
 
@@ -146,17 +152,27 @@ export default function Home() {
                 }}
                 className="flex flex-col sm:flex-row gap-6 justify-center"
               >
-                <Link
-                  href="/login"
-                  className="group relative bg-[#58cbf7] hover:bg-[#004AAD] text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
-                >
-                  <span className="relative z-10">Join ACM Today</span>
+                <Link href="/login" className={styles.blobBtn}>
+                  Join ACM Today
+                  <span className={styles.blobBtnInner}>
+                    <span className={styles.blobBtnBlobs}>
+                      <span className={styles.blobBtnBlob}></span>
+                      <span className={styles.blobBtnBlob}></span>
+                      <span className={styles.blobBtnBlob}></span>
+                      <span className={styles.blobBtnBlob}></span>
+                    </span>
+                  </span>
                 </Link>
-                <Link
-                  href="/teams"
-                  className="group border-3 border-white text-white hover:bg-white hover:text-[#004AAD] font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105"
-                >
+                <Link href="/teams" className={`${styles.blobBtn} ${styles.blobBtnSecondary}`}>
                   Explore Teams
+                  <span className={styles.blobBtnInner}>
+                    <span className={styles.blobBtnBlobs}>
+                      <span className={styles.blobBtnBlob}></span>
+                      <span className={styles.blobBtnBlob}></span>
+                      <span className={styles.blobBtnBlob}></span>
+                      <span className={styles.blobBtnBlob}></span>
+                    </span>
+                  </span>
                 </Link>
               </motion.div>
             </motion.div>
@@ -191,7 +207,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-50px" }}
             className="grid md:grid-cols-3 gap-8 mb-16"
           >
-            {teams.map((team, index) => {
+            {teams.map((team) => {
               const IconComponent = team.icon;
               return (
                 <motion.div
@@ -304,6 +320,29 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SVG Filter for Blob Effect */}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        style={{ position: 'absolute', width: 0, height: 0 }}
+      >
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur
+              in="SourceGraphic"
+              result="blur"
+              stdDeviation="10"
+            />
+            <feColorMatrix
+              in="blur"
+              mode="matrix"
+              values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7"
+              result="goo"
+            />
+            <feBlend in2="goo" in="SourceGraphic" result="mix" />
+          </filter>
+        </defs>
+      </svg>
     </>
   );
 }
