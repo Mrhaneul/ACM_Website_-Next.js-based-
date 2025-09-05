@@ -6,7 +6,7 @@ const Navbar = () => {
         <nav className='bg-white text-black p-2 border-b-[6px] border-[#004AAD]'>
             <div className='container mx-auto flex justify-between items-center'>
                 <Link href="/" className="flex items-center space-x-2">
-                    <Image src="/acm.png" alt="ACM Logo" width={80} height={80}/>
+                    <Image src="/acm.png" alt="ACM Logo" width={80} height={80} unoptimized={true}/>
                     <span className="text-xl font-black">Association for <br/> Computing Machinery</span>
                 </Link>
                 <ul className="flex items-center space-x-6">

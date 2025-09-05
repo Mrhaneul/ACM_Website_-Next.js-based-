@@ -125,6 +125,7 @@ export default function TeamsPage() {
                         width={120}
                         height={120}
                         className={styles.teamLogo}
+                        unoptimized={true}
                       />
                     </motion.div>
                   </div>
