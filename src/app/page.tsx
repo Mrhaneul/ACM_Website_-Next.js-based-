@@ -11,170 +11,132 @@ import { useRef } from "react";
 import Link from "next/link";
 import { FaTrophy, FaShieldAlt, FaCode, FaArrowRight } from "react-icons/fa";
 import TextType from "@/src/components/TextType";
+import { useIsMobile, useIsTablet, useIsDesktop } from "../hooks/Responsive";
+const teams = [
+  {
+    name: "ICPC",
+    title: "International Collegiate Programming Contest",
+    description:
+      "Sharpen your algorithms and compete globally in prestigious programming competitions",
+    icon: FaTrophy,
+    color: "#004AAD",
+    gradient: "from-blue-600 to-blue-800",
+    members: 15,
+    competitions: 8,
+  },
+  {
+    name: "CCDC",
+    title: "Collegiate Cyber Defense Competition",
+    description:
+      "Defend networks, learn cybersecurity, and protect against real-world threats",
+    icon: FaShieldAlt,
+    color: "#58cbf7",
+    gradient: "from-cyan-400 to-blue-500",
+    members: 12,
+    competitions: 5,
+  },
+  {
+    name: "SET",
+    title: "Software Engineering Team",
+    description:
+      "Build real applications, gain industry experience, and create impactful solutions",
+    icon: FaCode,
+    color: "#004AAD",
+    gradient: "from-indigo-600 to-purple-600",
+    members: 20,
+    projects: 8,
+  },
+];
 
 export default function Home() {
   const ref = useRef(null);
   const shouldReduceMotion = useReducedMotion();
+
+  const isMobile = useIsMobile();
+  const useTablet = useIsTablet();
+  const useDesktop = useIsDesktop();
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]); // Reduced parallax
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]); // Less opacity change
-
-  const teams = [
-    {
-      name: "ICPC",
-      title: "International Collegiate Programming Contest",
-      description:
-        "Sharpen your algorithms and compete globally in prestigious programming competitions",
-      icon: FaTrophy,
-      color: "#004AAD",
-      gradient: "from-blue-600 to-blue-800",
-      members: 15,
-      competitions: 8,
-    },
-    {
-      name: "CCDC",
-      title: "Collegiate Cyber Defense Competition",
-      description:
-        "Defend networks, learn cybersecurity, and protect against real-world threats",
-      icon: FaShieldAlt,
-      color: "#58cbf7",
-      gradient: "from-cyan-400 to-blue-500",
-      members: 12,
-      competitions: 5,
-    },
-    {
-      name: "SET",
-      title: "Software Engineering Team",
-      description:
-        "Build real applications, gain industry experience, and create impactful solutions",
-      icon: FaCode,
-      color: "#004AAD",
-      gradient: "from-indigo-600 to-purple-600",
-      members: 20,
-      projects: 8,
-    },
-  ];
-
-  // Simplified animation variants for better performance
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: shouldReduceMotion ? 0.1 : 0.6, ease: "easeOut" },
-  };
-
-  const staggerContainer = {
-    animate: {
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.1,
-      },
-    },
-  };
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
 
   return (
     <>
       {/* HERO SECTION */}
       <main ref={ref} className={styles.campus}>
-        <motion.div className={styles.overlay} style={{ y, opacity }}>
+        <motion.div
+          className={styles.overlay}
+          style={{ y, opacity }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="text-center px-4 max-w-5xl mx-auto">
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.8 }}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-5xl md:text-7xl font-black text-white leading-tight mb-8"
             >
-              <motion.h1
-                {...fadeInUp}
-                transition={{
-                  ...fadeInUp.transition,
-                  delay: shouldReduceMotion ? 0 : 0.2,
-                }}
-                className="text-5xl md:text-8xl font-black text-white leading-tight mb-8"
-              >
-                <TextType
-                  text="Association for"
-                  as="span"
-                  typingSpeed={75}
-                  loop={false}
-                  showCursor={false}
-                  initialDelay={shouldReduceMotion ? 0 : 800}
-                  variableSpeed={undefined}
-                  onSentenceComplete={undefined}
-                />
-                <br />
-                <span className="text-[#58cbf7]">
-                  <TextType
-                    text="Computing"
-                    as="span"
-                    typingSpeed={75}
-                    loop={false}
-                    showCursor={false}
-                    initialDelay={shouldReduceMotion ? 0 : 1500}
-                    variableSpeed={undefined}
-                    onSentenceComplete={undefined}
-                  />
+              <TextType
+                text={["Association for Computing Machinery"]}
+                as="span"
+                typingSpeed={75}
+                showCursor={true}
+                cursorCharacter="_"
+                cursorClassName="text-[#58cbf7]"
+                pauseDuration={1500}
+                loop={false}
+                variableSpeed={null}
+                onSentenceComplete={() => {}}
+              />
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto"
+            >
+              Empowering the next generation of computer scientists at
+              California Baptist University
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-6 justify-center"
+            >
+              <Link href="/login" className={styles.blobBtn}>
+                Join ACM Today
+                <span className={styles.blobBtnInner}>
+                  <span className={styles.blobBtnBlobs}>
+                    <span className={styles.blobBtnBlob}></span>
+                    <span className={styles.blobBtnBlob}></span>
+                    <span className={styles.blobBtnBlob}></span>
+                    <span className={styles.blobBtnBlob}></span>
+                  </span>
                 </span>
-                <br />
-                <TextType
-                  text="Machinery"
-                  as="span"
-                  typingSpeed={75}
-                  loop={false}
-                  showCursor={true}
-                  cursorCharacter="|"
-                  cursorClassName="text-[#58cbf7]"
-                  initialDelay={shouldReduceMotion ? 0 : 2200}
-                  variableSpeed={undefined}
-                  onSentenceComplete={undefined}
-                />
-              </motion.h1>
-
-              <motion.p
-                {...fadeInUp}
-                transition={{
-                  ...fadeInUp.transition,
-                  delay: shouldReduceMotion ? 0 : 0.4,
-                }}
-                className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto"
+              </Link>
+              <Link
+                href="/teams"
+                className={`${styles.blobBtn} ${styles.blobBtnSecondary}`}
               >
-                Empowering the next generation of computer scientists at
-                California Baptist University
-              </motion.p>
-
-              <motion.div
-                {...fadeInUp}
-                transition={{
-                  ...fadeInUp.transition,
-                  delay: shouldReduceMotion ? 0 : 0.6,
-                }}
-                className="flex flex-col sm:flex-row gap-6 justify-center"
-              >
-                <Link href="/login" className={styles.blobBtn}>
-                  Join ACM Today
-                  <span className={styles.blobBtnInner}>
-                    <span className={styles.blobBtnBlobs}>
-                      <span className={styles.blobBtnBlob}></span>
-                      <span className={styles.blobBtnBlob}></span>
-                      <span className={styles.blobBtnBlob}></span>
-                      <span className={styles.blobBtnBlob}></span>
-                    </span>
+                Explore Teams
+                <span className={styles.blobBtnInner}>
+                  <span className={styles.blobBtnBlobs}>
+                    <span className={styles.blobBtnBlob}></span>
+                    <span className={styles.blobBtnBlob}></span>
+                    <span className={styles.blobBtnBlob}></span>
+                    <span className={styles.blobBtnBlob}></span>
                   </span>
-                </Link>
-                <Link href="/teams" className={`${styles.blobBtn} ${styles.blobBtnSecondary}`}>
-                  Explore Teams
-                  <span className={styles.blobBtnInner}>
-                    <span className={styles.blobBtnBlobs}>
-                      <span className={styles.blobBtnBlob}></span>
-                      <span className={styles.blobBtnBlob}></span>
-                      <span className={styles.blobBtnBlob}></span>
-                      <span className={styles.blobBtnBlob}></span>
-                    </span>
-                  </span>
-                </Link>
-              </motion.div>
+                </span>
+              </Link>
             </motion.div>
           </div>
         </motion.div>
@@ -182,13 +144,14 @@ export default function Home() {
 
       {/* TEAMS PREVIEW SECTION */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative z-10">
-        {/* Simplified background elements */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-cyan-400/5 z-0"></div>
 
         <div className="container mx-auto px-4 relative z-20">
           <motion.div
-            {...fadeInUp}
-            viewport={{ once: true, margin: "-100px" }}
+            initial={{ opacity: 0, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-6xl font-bold text-[#004AAD] mb-6">
@@ -200,26 +163,24 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid md:grid-cols-3 gap-8 mb-16"
-          >
-            {teams.map((team) => {
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {teams.map((team, index) => {
               const IconComponent = team.icon;
               return (
                 <motion.div
                   key={team.name}
-                  variants={fadeInUp}
+                  // initial={{ opacity: 0, y: 0 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    ease: "easeOut",
+                  }}
                   whileHover={
                     shouldReduceMotion
                       ? {}
-                      : {
-                          y: -10,
-                          transition: { duration: 0.2 },
-                        }
+                      : { y: -10, transition: { duration: 0.2 } }
                   }
                   className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:border-[#58cbf7] transition-all duration-300 overflow-hidden"
                 >
@@ -272,19 +233,21 @@ export default function Home() {
                     </Link>
                   </div>
 
-                  {/* Simplified hover effect */}
+                  {/* Hover effect */}
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${team.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
                   ></div>
                 </motion.div>
               );
             })}
-          </motion.div>
+          </div>
 
           {/* Learn More Button */}
           <motion.div
-            {...fadeInUp}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6 }}
             className="text-center"
           >
             <Link
@@ -301,7 +264,12 @@ export default function Home() {
       {/* CALL TO ACTION */}
       <section className="py-20 bg-gradient-to-r from-[#004AAD] to-[#58cbf7] text-white relative z-10">
         <div className="container mx-auto px-4 text-center relative z-20">
-          <motion.div {...fadeInUp} viewport={{ once: true }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Ready to Join the Future?
             </h2>
@@ -310,7 +278,7 @@ export default function Home() {
               like-minded students who share your passion for technology
             </p>
             <Link
-              href="/login"
+              href="/contact"
               className="inline-flex items-center gap-3 bg-white text-[#004AAD] font-bold py-4 px-12 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
             >
               Get Started Now
@@ -324,7 +292,7 @@ export default function Home() {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
-        style={{ position: 'absolute', width: 0, height: 0 }}
+        style={{ position: "absolute", width: 0, height: 0 }}
       >
         <defs>
           <filter id="goo">

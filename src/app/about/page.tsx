@@ -1,6 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function AboutPage() {
   const shouldReduceMotion = useReducedMotion();
@@ -12,13 +14,23 @@ export default function AboutPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white">
+    <main
+      className="min-h-screen"
+      style={{
+        backgroundImage:
+          "linear-gradient(135deg, rgba(0, 74, 173, 0.8), rgba(88, 203, 247, 0.7)), url('/home.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "scroll",
+      }}
+    >
       <div className="container mx-auto px-4 py-12">
         <motion.h1
           initial={fadeInUp.initial}
           animate={fadeInUp.animate}
           transition={{ ...fadeInUp.transition, delay: 0.2 }}
-          className="text-4xl font-bold text-center text-[#004AAD] mb-8"
+          className="text-4xl font-bold text-center text-white mb-8"
         >
           About ACM @ CBU
         </motion.h1>
@@ -28,7 +40,7 @@ export default function AboutPage() {
             initial={fadeInUp.initial}
             animate={fadeInUp.animate}
             transition={{ ...fadeInUp.transition, delay: 0.3 }}
-            className="bg-gray-50 rounded-lg p-8 mb-8"
+            className="bg-white/95 backdrop-blur-sm rounded-lg p-8 mb-8 shadow-lg"
           >
             <h2 className="text-2xl font-semibold text-[#004AAD] mb-4">
               Who We Are
@@ -47,7 +59,7 @@ export default function AboutPage() {
               initial={fadeInUp.initial}
               animate={fadeInUp.animate}
               transition={{ ...fadeInUp.transition, delay: 0.4 }}
-              className="bg-white border-2 border-[#004AAD] rounded-lg p-6"
+              className="bg-white/95 backdrop-blur-sm border-2 border-[#004AAD] rounded-lg p-6 shadow-lg"
             >
               <h3 className="text-xl font-semibold text-[#004AAD] mb-3">
                 Our Mission
@@ -63,7 +75,7 @@ export default function AboutPage() {
               initial={fadeInUp.initial}
               animate={fadeInUp.animate}
               transition={{ ...fadeInUp.transition, delay: 0.5 }}
-              className="bg-white border-2 border-[#58cbf7] rounded-lg p-6"
+              className="bg-white/95 backdrop-blur-sm border-2 border-[#58cbf7] rounded-lg p-6 shadow-lg"
             >
               <h3 className="text-xl font-semibold text-[#004AAD] mb-3">
                 What We Do
@@ -80,26 +92,26 @@ export default function AboutPage() {
             initial={fadeInUp.initial}
             animate={fadeInUp.animate}
             transition={{ ...fadeInUp.transition, delay: 0.6 }}
-            className="bg-gradient-to-r from-[#004AAD] to-[#58cbf7] text-white rounded-lg p-8 text-center"
+            className="bg-gradient-to-r from-[#004AAD] to-[#58cbf7] text-white rounded-lg p-8 text-center shadow-lg"
           >
             <h2 className="text-2xl font-semibold mb-4">Join Our Community</h2>
             <p className="text-lg mb-6">
-              Whether you're a beginner or an experienced programmer, there's a
-              place for you in ACM @ CBU!
+              Whether you&apos;re a beginner or an experienced programmer,
+              there&apos;s a place for you in ACM @ CBU!
             </p>
-            <div className="space-x-4">
-              <a
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
                 href="/teams"
                 className="bg-white text-[#004AAD] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
               >
                 Explore Our Teams
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/contact"
                 className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#004AAD] transition"
               >
                 Get In Touch
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import styles from "./teams.module.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ICPC_Section from "@/src/components/Teams/ICPC_Section";
 import CCDC_Section from "@/src/components/Teams/CCDC_Section";
@@ -16,76 +16,92 @@ const teams = [
     logo: "/icpc.png",
     color: "#004AAD",
     gradient: "from-blue-600 to-blue-800",
-    description: "Competitive programming excellence"
+    description: "Competitive programming excellence",
+    component: ICPC_Section,
   },
   {
     id: "ccdc",
-    name: "CCDC", 
+    name: "CCDC",
     fullName: "Collegiate Cyber Defense Competition",
     logo: "/ccdc.png",
     color: "#73B9F3",
     gradient: "from-sky-400 to-blue-600",
-    description: "Cybersecurity defense mastery"
+    description: "Cybersecurity defense mastery",
+    component: CCDC_Section,
   },
   {
     id: "set",
     name: "SET",
-    fullName: "Software Engineering Team", 
+    fullName: "Software Engineering Team",
     logo: "/set.png",
     color: "#004AAD",
     gradient: "from-indigo-600 to-blue-700",
-    description: "Innovation through collaboration"
-  }
+    description: "Innovation through collaboration",
+    component: SET_Section,
+  },
 ];
 
+// Define animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const cardVariants = {
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
 export default function TeamsPage() {
-	const [activeSection, setActiveSection] = useState<string | null>(null);
-	const [hoveredTeam, setHoveredTeam] = useState<string | null>(null);
+  const [selectedTeam, setSelectedTeam] = useState(null);
 
-	const handleTeamClick = (teamName: string) => {
-		setActiveSection(activeSection === teamName ? null: teamName);
-	};
-
-	useEffect(() => {
-		if(activeSection) {
-			setTimeout(() => {
-				const element = document.getElementById(activeSection);
-				if(element) {
-					element.scrollIntoView({
-						behavior: "smooth",
-						block: "start",
-					});
-				}
-			}, 100);
-		}
-	}, [activeSection]);
+  const scrollToTeam = (teamId) => {
+    setSelectedTeam(teamId);
+    const element = document.getElementById(`team-${teamId}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
-		<>
-    	<div className={styles.pageContainer}>
+    <>
+      <div className={styles.pageContainer}>
         {/* Hero Section */}
-        <motion.section 
+        <motion.section
           className={styles.heroSection}
-          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
           <div className={styles.heroContent}>
-            <motion.h1 
+            <motion.h1
               className={styles.heroTitle}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              Excellence in <span className={styles.highlightText}>Competition</span>
+              Excellence in{" "}
+              <span className={styles.highlightText}>Competition</span>
             </motion.h1>
-            <motion.p 
+            <motion.p
               className={styles.heroSubtitle}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.6 }}
             >
-              Three elite teams, one unified mission of academic and professional excellence
+              Three elite teams, one unified mission of academic and
+              professional excellence
             </motion.p>
           </div>
           <div className={styles.heroPattern}></div>
@@ -93,32 +109,23 @@ export default function TeamsPage() {
 
         {/* Teams Grid */}
         <section className={styles.teamsGrid}>
-          <div className={styles.gridContainer}>
-            {teams.map((team, index) => (
+          <motion.div
+            className={styles.gridContainer}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {teams.map((team) => (
               <motion.div
                 key={team.id}
-                className={`${styles.teamCard} ${activeSection === team.id ? styles.active : ''}`}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2, duration: 0.6 }}
-                whileHover={{ 
-                  scale: 1.03,
-                  rotateY: 5,
-                  transition: { duration: 0.3 }
-                }}
-                onHoverStart={() => setHoveredTeam(team.id)}
-                onHoverEnd={() => setHoveredTeam(null)}
-                onClick={() => handleTeamClick(team.id)}
+                className={styles.teamCard}
+                variants={cardVariants}
+                onClick={() => scrollToTeam(team.id)}
+                style={{ cursor: "pointer" }}
               >
                 <div className={styles.cardHeader}>
                   <div className={styles.logoContainer}>
-                    <motion.div
-                      className={styles.logoWrapper}
-                      animate={{
-                        rotateY: hoveredTeam === team.id ? 360 : 0
-                      }}
-                      transition={{ duration: 0.6 }}
-                    >
+                    <div className={styles.logoWrapper}>
                       <Image
                         src={team.logo}
                         alt={`${team.name} Team`}
@@ -127,7 +134,7 @@ export default function TeamsPage() {
                         className={styles.teamLogo}
                         unoptimized={true}
                       />
-                    </motion.div>
+                    </div>
                   </div>
                   <div className={styles.cardContent}>
                     <h2 className={styles.teamName}>{team.name}</h2>
@@ -135,61 +142,42 @@ export default function TeamsPage() {
                     <p className={styles.teamDescription}>{team.description}</p>
                   </div>
                 </div>
-                
+
                 <div className={styles.cardFooter}>
-                  <motion.div 
-                    className={styles.exploreButton}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
+                  <div className={styles.exploreButton}>
                     <span>Explore Team</span>
-                    <motion.i 
+                    <i
                       className="bi bi-arrow-right"
-                      animate={{
-                        x: hoveredTeam === team.id ? 5 : 0
-                      }}
                       style={{
-                        fontSize: '1.2rem',
-                        transition: 'transform 0.3s ease'
+                        fontSize: "1.2rem",
                       }}
                     />
-                  </motion.div>
+                  </div>
                 </div>
-                
-                <div 
+
+                <div
                   className={styles.cardBackground}
-                  style={{ background: `linear-gradient(135deg, ${team.color}15, ${team.color}08)` }}
+                  style={{
+                    background: `linear-gradient(135deg, ${team.color}15, ${team.color}08)`,
+                  }}
                 ></div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </section>
 
-        {/* Team Sections */}
-        <AnimatePresence>
-          {activeSection && (
-            <motion.section
-              id={activeSection}
-              className={styles.teamSection}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            >
-              <motion.div
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -50, opacity: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-              >
-                {activeSection === "icpc" && <ICPC_Section />}
-                {activeSection === "ccdc" && <CCDC_Section />}
-                {activeSection === "set" && <SET_Section />}
-              </motion.div>
-            </motion.section>
-          )}
-        </AnimatePresence>
+        {/* Team Detail Sections */}
+        <div className={styles.teamDetailsContainer}>
+          {teams.map((team) => {
+            const TeamComponent = team.component;
+            return (
+              <div key={team.id} id={`team-${team.id}`}>
+                <TeamComponent />
+              </div>
+            );
+          })}
+        </div>
       </div>
-		</>
+    </>
   );
 }
