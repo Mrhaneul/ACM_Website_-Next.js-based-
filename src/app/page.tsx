@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { FaTrophy, FaShieldAlt, FaCode, FaArrowRight } from "react-icons/fa";
+import { FaTrophy, FaShieldAlt, FaCode, FaGamepad, FaArrowRight } from "react-icons/fa";
 import TextType from "@/src/components/TextType";
 import { useIsMobile, useIsTablet, useIsDesktop } from "../hooks/Responsive";
 const teams = [
@@ -45,6 +45,17 @@ const teams = [
     gradient: "from-indigo-600 to-purple-600",
     members: 20,
     projects: 8,
+  },
+  {
+    name: "Game Design",
+    title: "Game Design Team",
+    description:
+      "Create engaging games, compete in game jams, and bring your creative visions to life",
+    icon: FaGamepad,
+    color: "#004AAD",
+    gradient: "from-blue-600 to-blue-800",
+    members: 6,
+    projects: 4,
   },
 ];
 
@@ -163,7 +174,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {teams.map((team, index) => {
               const IconComponent = team.icon;
               return (

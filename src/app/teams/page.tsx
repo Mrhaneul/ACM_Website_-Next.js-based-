@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ICPC_Section from "@/src/components/Teams/ICPC_Section";
 import CCDC_Section from "@/src/components/Teams/CCDC_Section";
 import SET_Section from "@/src/components/Teams/SET_Section";
+import GD_Section from "@/src/components/Teams/GD_Section";
 
 const teams = [
   {
@@ -39,6 +40,16 @@ const teams = [
     description: "Innovation through collaboration",
     component: SET_Section,
   },
+  {
+    id: "gd",
+    name: "GD",
+    fullName: "Game Design",
+    logo: "/gd.png",
+    color: "#004AAD",
+    gradient: "from-blue-600 to-blue-800",
+    description: "Creating engaging and original games",
+    component: GD_Section,
+  },
 ];
 
 // Define animation variants
@@ -68,10 +79,19 @@ export default function TeamsPage() {
   const [selectedTeam, setSelectedTeam] = useState(null);
 
   const scrollToTeam = (teamId) => {
-    setSelectedTeam(teamId);
-    const element = document.getElementById(`team-${teamId}`);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (selectedTeam === teamId) {
+      // If clicking the same team, close it
+      setSelectedTeam(null);
+    } else {
+      // Open the selected team
+      setSelectedTeam(teamId);
+      // Small delay to allow state to update before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(`team-${teamId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
     }
   };
 
@@ -100,8 +120,8 @@ export default function TeamsPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.6 }}
             >
-              Three elite teams, one unified mission of academic and
-              professional excellence
+              Four elite teams, one unified mission of academic and professional
+              excellence
             </motion.p>
           </div>
           <div className={styles.heroPattern}></div>
@@ -118,7 +138,9 @@ export default function TeamsPage() {
             {teams.map((team) => (
               <motion.div
                 key={team.id}
-                className={styles.teamCard}
+                className={`${styles.teamCard} ${
+                  selectedTeam === team.id ? styles.selectedCard : ""
+                }`}
                 variants={cardVariants}
                 onClick={() => scrollToTeam(team.id)}
                 style={{ cursor: "pointer" }}
@@ -145,9 +167,15 @@ export default function TeamsPage() {
 
                 <div className={styles.cardFooter}>
                   <div className={styles.exploreButton}>
-                    <span>Explore Team</span>
+                    <span>
+                      {selectedTeam === team.id ? "Close Team" : "Explore Team"}
+                    </span>
                     <i
-                      className="bi bi-arrow-right"
+                      className={
+                        selectedTeam === team.id
+                          ? "bi bi-x-lg"
+                          : "bi bi-arrow-right"
+                      }
                       style={{
                         fontSize: "1.2rem",
                       }}
@@ -167,16 +195,28 @@ export default function TeamsPage() {
         </section>
 
         {/* Team Detail Sections */}
-        <div className={styles.teamDetailsContainer}>
-          {teams.map((team) => {
-            const TeamComponent = team.component;
-            return (
-              <div key={team.id} id={`team-${team.id}`}>
-                <TeamComponent />
-              </div>
-            );
-          })}
-        </div>
+        <AnimatePresence mode="wait">
+          {selectedTeam && (
+            <motion.div
+              key={selectedTeam}
+              className={styles.teamDetailsContainer}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              {teams.map((team) => {
+                if (team.id !== selectedTeam) return null;
+                const TeamComponent = team.component;
+                return (
+                  <div key={team.id} id={`team-${team.id}`}>
+                    <TeamComponent />
+                  </div>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );

@@ -87,8 +87,175 @@
   font-weight: 400;
   line-height: 1.6;
   max-width: 800px;
-  margin: 0 auto 4rem;
+  margin: 0 auto 2rem;
   color: #64748b;
+}
+
+/* Section Containers */
+.introSection,
+.whatWeDoSection,
+.statsSection,
+.leadershipSection,
+.joinSection {
+  margin-bottom: 4rem;
+  padding: 0 2rem;
+}
+
+.sectionSubtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #004AAD;
+  text-align: center;
+}
+
+/* Skills List */
+.skillsList {
+  list-style: none;
+  padding: 0;
+  max-width: 700px;
+  margin: 1.5rem auto;
+  text-align: left;
+}
+
+.skillsList li {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  line-height: 2;
+  color: #475569;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.skillsList li::before {
+  content: '▹';
+  position: absolute;
+  left: 0.5rem;
+  color: #004AAD;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Stats Section */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.statCard {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 74, 173, 0.1);
+  border: 2px solid #e2e8f0;
+  transition: transform 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+  border-color: #004AAD;
+}
+
+.statLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.statValue {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #004AAD;
+  margin: 0;
+}
+
+.achievementBox {
+  background: linear-gradient(135deg, #004AAD 0%, #73B9F3 100%);
+  padding: 2rem;
+  border-radius: 16px;
+  margin-top: 2rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.achievementLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.achievementText {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: white;
+  margin: 0;
+}
+
+.highlightText {
+  font-weight: 600;
+  color: #FFD700;
+}
+
+/* Contact Links */
+.contactLinks {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.discordButton,
+.rosterButton {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0, 74, 173, 0.2);
+}
+
+.discordButton {
+  background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
+  color: white;
+}
+
+.discordButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(88, 101, 242, 0.4);
+}
+
+.rosterButton {
+  background: white;
+  color: #004AAD;
+  border: 2px solid #004AAD;
+}
+
+.rosterButton:hover {
+  background: #004AAD;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 74, 173, 0.4);
 }
 
 .teamCard.selected {
@@ -305,11 +472,21 @@
     font-size: 20px;
   }
   .teamSectionTitle {
-    font-size: 36px;
+    font-size: 2.5rem;
+  }
+  .sectionSubtitle {
+    font-size: 1.75rem;
   }
   .teamDescription {
-    font-size: 24px;
+    font-size: 1.125rem;
     padding: 0 10px;
+  }
+  .skillsList li {
+    font-size: 1rem;
+  }
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   .memberCard {
     width: 80%;
@@ -322,6 +499,11 @@
   }
   .gradclass {
     font-size: 18px;
+  }
+  .discordButton,
+  .rosterButton {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
   }
 }
 
@@ -336,6 +518,15 @@
   }
   .teamSection {
     margin-top: 40px;
+    padding: 60px 1rem 80px;
+  }
+  .introSection,
+  .whatWeDoSection,
+  .statsSection,
+  .leadershipSection,
+  .joinSection {
+    padding: 0 1rem;
+    margin-bottom: 3rem;
   }
   .memberGrid {
     grid-template-columns: 1fr;
@@ -344,11 +535,41 @@
     width: 90%;
   }
   .teamSectionTitle {
-    font-size: 28px;
+    font-size: 2rem;
+  }
+  .sectionSubtitle {
+    font-size: 1.5rem;
   }
   .teamDescription {
-    font-size: 18px;
+    font-size: 1rem;
     padding: 0 12px;
+  }
+  .skillsList {
+    padding: 0 1rem;
+  }
+  .skillsList li {
+    font-size: 0.95rem;
+  }
+  .statCard {
+    padding: 1.25rem;
+  }
+  .statValue {
+    font-size: 1.25rem;
+  }
+  .achievementBox {
+    padding: 1.5rem;
+  }
+  .achievementText {
+    font-size: 1rem;
+  }
+  .contactLinks {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .discordButton,
+  .rosterButton {
+    width: 100%;
+    justify-content: center;
   }
   .name {
     font-size: 22px;
