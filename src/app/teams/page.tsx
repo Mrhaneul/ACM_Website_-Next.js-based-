@@ -44,7 +44,7 @@ const teams = [
     id: "gd",
     name: "GD",
     fullName: "Game Design",
-    logo: "/gd.png",
+    logo: "/GD.png",
     color: "#004AAD",
     gradient: "from-blue-600 to-blue-800",
     description: "Creating engaging and original games",

@@ -13,9 +13,10 @@ const GD_Section = () => {
         <div className={styles.introSection}>
           <h4 className={styles.sectionSubtitle}>About the Team</h4>
           <p className={styles.teamDescription}>
-            The Game Design team is ACM&apos;s creative hub for aspiring game developers
-            and designers. We bring together students passionate about creating engaging,
-            original games through hands-on development and collaborative projects.
+            The Game Design team is ACM&apos;s creative hub for aspiring game
+            developers and designers. We bring together students passionate
+            about creating engaging, original games through hands-on development
+            and collaborative projects.
           </p>
         </div>
 
@@ -23,10 +24,10 @@ const GD_Section = () => {
         <div className={styles.whatWeDoSection}>
           <h4 className={styles.sectionSubtitle}>What We Do</h4>
           <p className={styles.teamDescription}>
-            Our team focuses on developing the technical and creative skills needed
-            to design and build compelling games. We actively participate in game jams
-            and collaborate across disciplines to expand our expertise. Members gain
-            experience with:
+            Our team focuses on developing the technical and creative skills
+            needed to design and build compelling games. We actively participate
+            in game jams and collaborate across disciplines to expand our
+            expertise. Members gain experience with:
           </p>
           <ul className={styles.skillsList}>
             <li>Game mechanics and level design</li>
@@ -57,10 +58,12 @@ const GD_Section = () => {
           <div className={styles.achievementBox}>
             <p className={styles.achievementLabel}>Our Mission</p>
             <p className={styles.achievementText}>
-              Compete and succeed in both campus and public game jams while building
-              innovative games that push creative boundaries.
+              Compete and succeed in both campus and public game jams while
+              building innovative games that push creative boundaries.
               <br />
-              <span className={styles.highlightText}>Creating the next generation of game developers!</span>
+              <span className={styles.achievementText}>
+                Creating the next generation of game developers!
+              </span>
             </p>
           </div>
         </div>

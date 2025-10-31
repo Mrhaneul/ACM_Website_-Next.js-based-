@@ -2,15 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const menuItems = [
     { href: "/", label: "Home" },
@@ -69,7 +64,7 @@ const Navbar = () => {
 
           {/* Mobile & Tablet Hamburger Button (shows below 1025px) */}
           <button
-            onClick={() => setMounted && setIsMenuOpen(!isMenuOpen)}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="flex min-[1025px]:hidden flex-col gap-1.5 p-2 hover:bg-gray-100 rounded transition-colors"
             aria-label="Toggle menu"
           >

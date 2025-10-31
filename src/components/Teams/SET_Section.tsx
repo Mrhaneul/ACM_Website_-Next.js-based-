@@ -12,11 +12,12 @@ const SET_Section = () => {
         <div className={styles.introSection}>
           <h4 className={styles.sectionSubtitle}>About the Team</h4>
           <p className={styles.teamDescription}>
-            The Software Engineering Team (SET) is ACM&apos;s innovation powerhouse,
-            where we tackle ambitious projects from building Large Language Models
-            from scratch to mastering React animations. We&apos;re the leading edge
-            in AI development at CBU, designing and building complex programming
-            projects for real-world career preparedness.
+            The Software Engineering Team (SET) is ACM&apos;s innovation
+            powerhouse, where we tackle ambitious projects from building Large
+            Language Models from scratch to mastering React animations.
+            We&apos;re the leading edge in AI development at CBU, designing and
+            building complex programming projects for real-world career
+            preparedness.
           </p>
         </div>
 
@@ -24,10 +25,10 @@ const SET_Section = () => {
         <div className={styles.whatWeDoSection}>
           <h4 className={styles.sectionSubtitle}>What We Do</h4>
           <p className={styles.teamDescription}>
-            SET is passionate about building impactful projects that push the boundaries
-            of what&apos;s possible. We combine cutting-edge AI research with practical
-            software development to create solutions that serve the CBU community.
-            Members gain hands-on experience with:
+            SET is passionate about building impactful projects that push the
+            boundaries of what&apos;s possible. We combine cutting-edge AI
+            research with practical software development to create solutions
+            that serve the CBU community. Members gain hands-on experience with:
           </p>
           <ul className={styles.skillsList}>
             <li>AI and machine learning development</li>
@@ -42,21 +43,30 @@ const SET_Section = () => {
         <div className={styles.statsSection}>
           <h4 className={styles.sectionSubtitle}>Current Projects</h4>
           <div className={styles.achievementBox}>
-            <p className={styles.achievementLabel}>GUTT - Ground-Up-Trained-Transformer</p>
+            <p className={styles.achievementLabel}>
+              GUTT - Ground-Up-Trained-Transformer
+            </p>
             <p className={styles.achievementText}>
-              Our flagship AI framework designed to work with any dataset and train
-              models for any application at CBU. Current applications include a
-              front desk helper with an interactive map to help students find
-              information about clubs, office locations, and the best spots to eat.
+              Our flagship AI framework designed to work with any dataset and
+              train models for any application at CBU. Current applications
+              include a front desk helper with an interactive map to help
+              students find information about clubs, office locations, and the
+              best spots to eat.
               <br />
-              <span className={styles.highlightText}>Building AI that serves our community!</span>
+              <span className={styles.achievementText}>
+                Building AI that serves our community!
+              </span>
             </p>
           </div>
-          <div className={styles.achievementBox} style={{ marginTop: '1.5rem' }}>
+          <div
+            className={styles.achievementBox}
+            style={{ marginTop: "1.5rem" }}
+          >
             <p className={styles.achievementLabel}>ACM Website</p>
             <p className={styles.achievementText}>
               Finalizing and fully publishing the ACM website with up-to-date
-              information while maintaining professional standards and modern design.
+              information while maintaining professional standards and modern
+              design.
             </p>
           </div>
         </div>
@@ -154,8 +164,9 @@ const SET_Section = () => {
           <h4 className={styles.sectionSubtitle}>How to Join</h4>
           <p className={styles.teamDescription}>
             Ready to build cutting-edge software and AI projects? Join us at our
-            Monday meetings in Room 203, or connect with us on Discord. We welcome
-            all students passionate about software engineering and innovation!
+            Monday meetings in Room 203, or connect with us on Discord. We
+            welcome all students passionate about software engineering and
+            innovation!
           </p>
           <div className={styles.contactLinks}>
             <a
