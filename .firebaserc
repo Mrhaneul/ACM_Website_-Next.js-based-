@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "acm-website-459ef"
+    "default": "acm-website-459ef",
+    "registration": "acm-cbu-open-house"
   }
 }

@@ -13,7 +13,10 @@ export default function ConditionalLayout({ children }: ConditionalLayoutProps) 
   const pathname = usePathname();
   
   // Routes where we don't want navbar and footer
-  const hideNavAndFooter = pathname === '/dashboard' || pathname?.startsWith('/dashboard/');
+  const hideNavAndFooter =
+    pathname === '/dashboard' ||
+    pathname?.startsWith('/dashboard/') ||
+    pathname === '/linktree';
   
   return (
     <>
