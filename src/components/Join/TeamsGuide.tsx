@@ -73,7 +73,7 @@ const steps: Step[] = [
     },
   },
   {
-    title: "Turn notifications on (this is the step people skip)",
+    title: "Turn notifications on",
     body: {
       ios: (
         <ol className="list-decimal space-y-1.5 pl-5">
