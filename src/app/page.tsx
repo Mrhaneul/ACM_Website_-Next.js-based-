@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import Reveal from "@/src/components/ui/Reveal";
+import Hero from "@/src/components/Home/Hero";
 import { teams } from "@/src/data/teams";
 import { site } from "@/src/config/site";
 import { aim } from "@/src/data/aim";
@@ -31,41 +32,7 @@ const steps = [
 export default function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-brand-ink text-white">
-        <Image
-          src="/home.png"
-          alt="The engineering building at California Baptist University"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[70%_center] opacity-80"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-ink via-brand-ink/75 to-brand-ink/5" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/80 via-transparent to-transparent" />
-        <div className="grain absolute inset-0" />
-
-        <div className="container-x relative py-24 sm:py-32 lg:py-40">
-          <p className="eyebrow !text-accent">Student chapter · {site.university}</p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.05] sm:text-6xl lg:text-7xl">
-            One club. Four ways in.
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
-            ACM | TEC is CBU&apos;s student-led tech collective. Bring something you want to build
-            and the club gives you the mentors and lab time to build it. Four divisions: software
-            engineering, cybersecurity, game development, and competitive programming. Any major,
-            no experience required.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Link href="/join" className="btn-inverse">
-              Join ACM <i className="bi bi-arrow-right" />
-            </Link>
-            <Link href="/teams" className="btn-outline-inverse">
-              See the teams
-            </Link>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       {/* Teams */}
       <section className="py-20 sm:py-28">

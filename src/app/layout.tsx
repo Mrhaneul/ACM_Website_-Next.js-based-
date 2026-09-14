@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "ACM | TEC at CBU",
     description: "Association for Computing Machinery at California Baptist University",
     type: "website",
-    images: ["/home.png"],
+    images: ["/home.jpg"],
   },
 };
 
