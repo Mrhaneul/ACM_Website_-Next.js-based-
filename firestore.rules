@@ -58,5 +58,19 @@ service cloud.firestore {
         && shortStr(request.resource.data.message, 5000) && request.resource.data.message.size() >= 10;
       allow read, update, delete: if isStaff();
     }
+
+    // SET project ideas (/interest/set-ideas). Anyone can submit; only
+    // leads/admins can read or export from /interest/set-ideas/admin.
+    match /setIdeas/{id} {
+      allow create: if
+        shortStr(request.resource.data.fullName, 160) && request.resource.data.fullName.size() > 0
+        && isEmail(request.resource.data.cbuEmail)
+        && shortStr(request.resource.data.ideaTitle, 200) && request.resource.data.ideaTitle.size() > 0
+        && shortStr(request.resource.data.description, 5000) && request.resource.data.description.size() > 0
+        && shortStr(request.resource.data.category, 40)
+        && shortStr(request.resource.data.techInterest, 500)
+        && shortStr(request.resource.data.involvement, 40);
+      allow read, update, delete: if isStaff();
+    }
   }
 }

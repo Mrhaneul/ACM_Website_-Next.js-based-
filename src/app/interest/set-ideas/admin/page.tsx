@@ -10,11 +10,14 @@ import {
   doc,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "@/src/lib/firebase";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "@/src/lib/firebase";
 import { SET_IDEAS_COLLECTION, CATEGORY_OPTIONS } from "@/src/lib/setIdeasValidators";
 import { buildCsv, downloadCsv } from "@/src/lib/csv";
 
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_SET_IDEAS_ADMIN_PASSWORD;
+/** The one shared admin login. Password is set in Firebase Auth, not in code. */
+const ADMIN_EMAIL = "admin@acm-website-459ef.web.app";
 
 interface IdeaSubmission {
   id: string;
@@ -29,7 +32,8 @@ interface IdeaSubmission {
 }
 
 export default function SetIdeasAdminPage() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [user, authLoading] = useAuthState(auth);
+  const authenticated = !!user && user.email === ADMIN_EMAIL;
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [ideas, setIdeas] = useState<IdeaSubmission[]>([]);
@@ -49,7 +53,7 @@ export default function SetIdeasAdminPage() {
     } catch (err) {
       console.error(err);
       setLoadError(
-        "Could not load submissions. Check that the Firestore rules allow reads on the setIdeas collection."
+        "Could not load submissions. Make sure you are signed in with the admin account."
       );
     } finally {
       setLoading(false);
@@ -61,16 +65,13 @@ export default function SetIdeasAdminPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticated]);
 
-  function handleLogin(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    if (!ADMIN_PASSWORD) {
-      setPasswordError("No admin password is configured. Set NEXT_PUBLIC_SET_IDEAS_ADMIN_PASSWORD.");
-      return;
-    }
-    if (password === ADMIN_PASSWORD) {
-      setAuthenticated(true);
-      setPasswordError("");
-    } else {
+    setPasswordError("");
+    try {
+      if (user && user.email !== ADMIN_EMAIL) await signOut(auth);
+      await signInWithEmailAndPassword(auth, ADMIN_EMAIL, password);
+    } catch {
       setPasswordError("Incorrect password.");
     }
   }
@@ -101,6 +102,10 @@ export default function SetIdeasAdminPage() {
 
   const filtered =
     categoryFilter === "All" ? ideas : ideas.filter((i) => i.category === categoryFilter);
+
+  if (authLoading) {
+    return <div className="min-h-screen bg-gray-50 flex items-center justify-center text-gray-500">Loading…</div>;
+  }
 
   if (!authenticated) {
     return (
