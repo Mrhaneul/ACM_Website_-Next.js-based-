@@ -98,10 +98,14 @@ export const majors = [
   "Other / Undecided",
 ];
 
-export const years = ["Freshman", "Sophomore", "Junior", "Senior", "Graduate"];
+export const years = ["Freshman", "Sophomore", "Junior", "Senior", "Grad Student", "Other"];
 
+/** Ids match the registration database's techExperience values. */
 export const experienceLevels = [
-  { id: "new", label: "Brand new", help: "Never coded, or only a little. That is where most of us started." },
-  { id: "some", label: "Some experience", help: "A class or two, a tutorial, a small project." },
-  { id: "confident", label: "Confident", help: "Built things on my own; comfortable in at least one language." },
+  { id: "None", label: "Brand new", help: "Never coded. That is where most of us started." },
+  { id: "Beginner", label: "Beginner", help: "A class or two, a tutorial, a small project." },
+  { id: "Intermediate", label: "Intermediate", help: "Built things on my own; comfortable in at least one language." },
+  { id: "Advanced", label: "Advanced", help: "Shipped something real; comfortable in a few languages." },
 ] as const;
+
+export const yesNoMaybe = ["Yes", "No", "Maybe"] as const;

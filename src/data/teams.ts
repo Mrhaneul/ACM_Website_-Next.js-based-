@@ -30,7 +30,7 @@ export const teams: Team[] = [
     tagline: "International Collegiate Programming Contest",
     logo: "/icpc.png",
     summary:
-      "Algorithm practice and team contests against universities around the world.",
+      "The algorithm work every other division builds around, plus weekly problem sets and contests.",
     about: [
       "The ICPC team represents ACM in the International Collegiate Programming Contest, one of the most prestigious competitive programming competitions in the world. Teams of three tackle algorithmic problems against the clock and against universities globally.",
     ],
@@ -63,7 +63,7 @@ export const teams: Team[] = [
     tagline: "Collegiate Cyber Defense Competition",
     logo: "/ccdc.png",
     summary:
-      "Defend a live corporate network against professional red-team attackers.",
+      "Audit systems that are actually in use, not a solvable-by-Friday CTF. Plus CCDC if you want the competition side.",
     about: [
       "The CCDC team is ACM's competitive cybersecurity branch, representing CBU in the Collegiate Cyber Defense Competition. The team defends network infrastructure against professional red-team hackers while keeping business services running, which is the same job a company security team has.",
       "Founded in 2023, the team competes against universities across the Western Region. During competition the team secures and maintains ten virtual machines in a fictional corporate environment under constant attack.",
@@ -102,7 +102,7 @@ export const teams: Team[] = [
     tagline: "Software Engineering Team",
     logo: "/set.png",
     summary:
-      "Ship real software: this website, AI tooling for campus, and full-stack projects.",
+      "Ship real software on a real team, not a class assignment. Standups, PRs, code review.",
     about: [
       "The Software Engineering Team is where ACM builds things. Projects have included training language models from scratch and production web apps. The point is to get real experience with repositories, code review, and deadlines before you graduate.",
       "SET combines applied AI research with practical software development to build tools that serve the CBU community.",
@@ -146,7 +146,7 @@ export const teams: Team[] = [
     tagline: "Game Design Team",
     logo: "/GD.png",
     summary:
-      "Build original games, enter game jams, and collaborate across art, music, and code.",
+      "Build something people actually play. Weekend jams, real engines.",
     about: [
       "The Game Design team is ACM's creative hub for aspiring game developers and designers. Members build engaging, original games through hands-on development and collaborative projects.",
       "The team develops both the technical and creative skills needed to design and ship games, participates in game jams, and works across disciplines to expand its range.",

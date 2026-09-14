@@ -149,9 +149,9 @@ export default function JoinFlow() {
               ))}
             </ul>
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link href={site.linktree} className="btn-primary">
-                <i className="bi bi-microsoft-teams" /> Join ACM on Teams
-              </Link>
+              <a href={site.teamsJoinUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                <i className="bi bi-microsoft-teams" /> Open ACM in Teams
+              </a>
               <Link href="/teams" className="btn-secondary">
                 Read about the teams
               </Link>

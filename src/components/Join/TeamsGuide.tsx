@@ -50,15 +50,13 @@ const steps: Step[] = [
       ios: (
         <>
           Tap <strong>Teams</strong> at the bottom, then the <strong>⋯</strong> or <strong>+</strong> in the top corner →{" "}
-          <strong>Join a team with a code</strong>. Enter <Code /> and tap <strong>Join</strong>. You can also use the link on our{" "}
-          <Link href={site.linktree} className="font-medium text-brand underline underline-offset-2">links page</Link>.
+          <strong>Join a team with a code</strong>. Enter <Code /> and tap <strong>Join</strong>. Or tap the button below and it opens straight in the app.
         </>
       ),
       android: (
         <>
           Tap <strong>Teams</strong> at the bottom, then the <strong>⋯</strong> or <strong>+</strong> in the top corner →{" "}
-          <strong>Join a team with a code</strong>. Enter <Code /> and tap <strong>Join</strong>. You can also use the link on our{" "}
-          <Link href={site.linktree} className="font-medium text-brand underline underline-offset-2">links page</Link>.
+          <strong>Join a team with a code</strong>. Enter <Code /> and tap <strong>Join</strong>. Or tap the button below and it opens straight in the app.
         </>
       ),
       desktop: (
@@ -69,9 +67,9 @@ const steps: Step[] = [
       ),
     },
     action: {
-      ios: { label: "Open our links page", href: site.linktree },
-      android: { label: "Open our links page", href: site.linktree },
-      desktop: { label: "Open our links page", href: site.linktree },
+      ios: { label: "Open ACM in Teams", href: site.teamsJoinUrl },
+      android: { label: "Open ACM in Teams", href: site.teamsJoinUrl },
+      desktop: { label: "Open ACM in Teams", href: site.teamsJoinUrl },
     },
   },
   {

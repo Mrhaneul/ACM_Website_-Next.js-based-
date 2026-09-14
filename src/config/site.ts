@@ -3,7 +3,7 @@
  * public site. Update here, not in components.
  */
 export const site = {
-  name: "ACM @ CBU",
+  name: "ACM | TEC",
   university: "California Baptist University",
   /** Registered name on CBU Connect. */
   registeredAs: "ACM | TEC (Technology Engineering Club)",
@@ -14,6 +14,9 @@ export const site = {
 
   /** All the links in one place; this is what "Join on Teams" buttons open. */
   linktree: "/linktree",
+  /** Microsoft Teams: deep link to the ACM team's General channel. */
+  teamsJoinUrl:
+    "https://teams.microsoft.com/l/channel/19%3A-FcyH0PUAu5BrEzBOkfnPOBKvaTS0qfxqkKyr5BMlzA1%40thread.tacv2/General?groupId=8d9bc2b5-c778-4292-a6e1-3d23300bdcd5&tenantId=d49f2cc1-1f59-4495-96c2-c72e31678766",
   /** Microsoft Teams: join code for the ACM team (Teams → Join a team with a code). */
   teamsJoinCode: "7KC58D5",
   /** Channels in the ACM team, in the order they matter to a new member. */

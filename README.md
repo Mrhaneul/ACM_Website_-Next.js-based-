@@ -18,6 +18,7 @@ npm run build    # production build (also type-checks)
 |---|---|
 | External links (Teams join link, Instagram, email, app store links) | `src/config/site.ts` |
 | Team descriptions, leads, meeting info | `src/data/teams.ts` |
+| AIM partnership content | `src/data/aim.ts` |
 | Skill taxonomy, majors, years for the join form | `src/data/skills.ts` |
 | Design tokens and shared classes (`btn-primary`, `field`, `card`, ...) | `src/app/globals.css`, `tailwind.config.ts` |
 | Pages | `src/app/{page,teams,about,join,contact}/` |
@@ -30,7 +31,18 @@ Edit `teamsJoinCode` in `src/config/site.ts`. "Join on Teams" buttons go to `/li
 
 ### Form submissions
 
-The join form writes to the `applications` collection and the contact form writes to `messages`. Anyone can create a document (validated by `firestore.rules`); only users whose `users/{uid}.role` is `admin` or `leader` can read them. View submissions in the Firebase console under Firestore.
+- **Join form (`/join`)** writes to the `registrations` collection in the **acm-cbu-open-house** Firebase project (see `src/lib/firebase-registration.ts`). It needs the `NEXT_PUBLIC_REG_*` values from `.env.local.example` in a `.env.local` file, both locally and in the deploy environment. `/register/admin` lists submissions and exports CSV; `/register` redirects to `/join`.
+- **Contact form** writes to `messages` in the main project. Anyone can create (validated by `firestore.rules`); only users whose `users/{uid}.role` is `admin` or `leader` can read.
+
+### AIM partnership
+
+Copy for the partnership lives in `src/data/aim.ts` (per-team deliverables, problem areas, principles, travel ideas). The logo is `public/aim-logo.png`.
+
+### Tests
+
+```bash
+npm test   # vitest: csv + registration validators
+```
 
 ## Deploy
 

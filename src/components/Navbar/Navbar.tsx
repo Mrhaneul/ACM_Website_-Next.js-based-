@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 const links = [
   { href: "/", label: "Home" },
   { href: "/teams", label: "Teams" },
+  { href: "/aim", label: "AIM partnership" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -27,8 +28,8 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3">
           <Image src="/acm.png" alt="" width={40} height={40} className="h-10 w-10" unoptimized />
           <span className="leading-tight">
-            <span className="block text-[0.95rem] font-semibold text-ink">ACM at CBU</span>
-            <span className="hidden text-xs text-ink-3 sm:block">Association for Computing Machinery</span>
+            <span className="block text-[0.95rem] font-semibold text-ink">ACM | TEC</span>
+            <span className="hidden text-xs text-ink-3 sm:block">CBU&apos;s student chapter of the ACM</span>
           </span>
         </Link>
 

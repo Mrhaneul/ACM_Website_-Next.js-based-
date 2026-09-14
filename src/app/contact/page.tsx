@@ -40,9 +40,9 @@ export default function ContactPage() {
             <div>
               <dt className="text-ink-3">Microsoft Teams</dt>
               <dd>
-                <Link href={site.linktree} className="font-medium text-brand hover:underline">
+                <a href={site.teamsJoinUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-brand hover:underline">
                   Join the ACM team
-                </Link>{" "}
+                </a>{" "}
                 <span className="text-ink-3">(the fastest way to reach everyone)</span>
               </dd>
             </div>

@@ -7,6 +7,7 @@ import { site } from "@/src/config/site";
 
 const nav = [
   { href: "/teams", label: "Teams" },
+  { href: "/aim", label: "AIM partnership" },
   { href: "/about", label: "About" },
   { href: "/join", label: "Join" },
   { href: "/contact", label: "Contact" },
@@ -20,10 +21,10 @@ export default function Footer() {
         <div className="max-w-xs">
           <div className="flex items-center gap-3">
             <Image src="/acm.png" alt="" width={36} height={36} className="h-9 w-9" unoptimized />
-            <span className="font-semibold text-ink">ACM at CBU</span>
+            <span className="font-semibold text-ink">ACM | TEC</span>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-ink-3">
-            The Association for Computing Machinery student chapter at {site.university}.
+            Technology Engineering Club, the Association for Computing Machinery student chapter at {site.university}.
           </p>
         </div>
 
@@ -59,9 +60,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <Link href={site.linktree} className="inline-flex items-center gap-2 text-sm text-ink-2 hover:text-brand">
+                <a href={site.teamsJoinUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-ink-2 hover:text-brand">
                   <i className="bi bi-microsoft-teams w-4" /> Microsoft Teams
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -69,7 +70,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-line">
         <div className="container-x flex flex-col gap-1 py-4 text-xs text-ink-3 sm:flex-row sm:justify-between">
-          <span>© {new Date().getFullYear()} ACM at CBU</span>
+          <span>© {new Date().getFullYear()} ACM | TEC at CBU</span>
           <span>A student organization at {site.university}</span>
         </div>
       </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Reveal from "@/src/components/ui/Reveal";
 import type { Team } from "@/src/data/teams";
 import { site } from "@/src/config/site";
+import { aim } from "@/src/data/aim";
 
 export default function TeamSection({ team, index }: { team: Team; index: number }) {
   return (
@@ -53,6 +54,18 @@ export default function TeamSection({ team, index }: { team: Team; index: number
               <div className="rounded-2xl border border-brand/20 bg-brand/5 p-5">
                 <p className="eyebrow">{team.highlight.label}</p>
                 <p className="mt-2 leading-relaxed text-ink-2">{team.highlight.text}</p>
+              </div>
+            )}
+            {aim.byTeam[team.id] && (
+              <div className="card p-5">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="eyebrow">This year for AIM</p>
+                  <Image src={aim.logo} alt="Africa Inland Mission" width={457} height={380} className="h-7 w-auto" />
+                </div>
+                <p className="mt-2 leading-relaxed text-ink-2">{aim.byTeam[team.id]}</p>
+                <Link href="/aim" className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline">
+                  About the partnership <i className="bi bi-arrow-right" />
+                </Link>
               </div>
             )}
           </Reveal>
@@ -112,9 +125,9 @@ export default function TeamSection({ team, index }: { team: Team; index: number
             <Link href={`/join?team=${team.id}`} className="btn-inverse">
               Join through the form
             </Link>
-            <Link href={site.linktree} className="btn-outline-inverse">
+            <a href={site.teamsJoinUrl} target="_blank" rel="noopener noreferrer" className="btn-outline-inverse">
               <i className="bi bi-microsoft-teams" /> Join on Teams
-            </Link>
+            </a>
           </div>
         </Reveal>
       </div>

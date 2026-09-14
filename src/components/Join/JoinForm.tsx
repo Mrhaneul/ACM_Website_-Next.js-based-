@@ -3,21 +3,25 @@
 import { useState } from "react";
 import Image from "next/image";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "@/src/lib/firebase";
+import { registrationDb, REGISTRATIONS_COLLECTION } from "@/src/lib/firebase-registration";
+import { isValidCbuEmail, isValidCbuId } from "@/src/lib/registrationValidators";
 import { teams } from "@/src/data/teams";
-import { experienceLevels, majors, years } from "@/src/data/skills";
+import { experienceLevels, majors, years, yesNoMaybe } from "@/src/data/skills";
 import SkillPicker from "./SkillPicker";
 
 export type Application = {
   firstName: string;
   lastName: string;
   email: string;
+  cbuId: string;
   phone: string;
   year: string;
   major: string;
   majorOther: string;
   teams: string[];
   experience: string;
+  missionInterest: string;
+  aiCoding: string;
   skills: string[];
   wantToLearn: string[];
   notes: string;
@@ -27,12 +31,15 @@ const empty = (initialTeam?: string): Application => ({
   firstName: "",
   lastName: "",
   email: "",
+  cbuId: "",
   phone: "",
   year: "Freshman",
   major: "",
   majorOther: "",
   teams: initialTeam && teams.some((t) => t.id === initialTeam) ? [initialTeam] : [],
   experience: "",
+  missionInterest: "",
+  aiCoding: "",
   skills: [],
   wantToLearn: [],
   notes: "",
@@ -45,11 +52,15 @@ const validate = (a: Application): Errors => {
   if (!a.firstName.trim()) e.firstName = "First name is required.";
   if (!a.lastName.trim()) e.lastName = "Last name is required.";
   if (!a.email.trim()) e.email = "Email is required.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email.trim())) e.email = "That doesn't look like an email address.";
+  else if (!isValidCbuEmail(a.email)) e.email = "Use your @calbaptist.edu email.";
+  if (!a.cbuId.trim()) e.cbuId = "CBU ID is required.";
+  else if (!isValidCbuId(a.cbuId)) e.cbuId = "Digits only.";
   if (a.phone && !/^[\d\s()+.-]{7,}$/.test(a.phone)) e.phone = "Digits, spaces, and dashes only.";
   if (!a.major) e.major = "Pick a major (or Other).";
   if (a.major === "Other / Undecided" && !a.majorOther.trim()) e.majorOther = "Tell us what you're studying, or type Undecided.";
   if (!a.experience) e.experience = "Pick whichever fits best. There is no wrong answer.";
+  if (!a.missionInterest) e.missionInterest = "Pick one.";
+  if (!a.aiCoding) e.aiCoding = "Pick one.";
   return e;
 };
 
@@ -88,16 +99,28 @@ export default function JoinForm({
     setBusy(true);
     setSubmitError("");
     try {
-      await addDoc(collection(db, "applications"), {
-        ...a,
+      const teamLabel: Record<string, string> = { icpc: "ICPC", ccdc: "NCCDC", set: "SET", gd: "Game Design" };
+      await addDoc(collection(registrationDb, REGISTRATIONS_COLLECTION), {
+        // Fields the registration admin page and CSV export expect.
+        fullName: `${a.firstName.trim()} ${a.lastName.trim()}`,
+        cbuEmail: a.email.trim().toLowerCase(),
+        cbuId: a.cbuId.trim(),
+        major: a.major === "Other / Undecided" ? a.majorOther.trim() : a.major,
+        classYear: a.year,
+        teams: a.teams.length ? a.teams.map((t) => teamLabel[t] ?? t) : ["Undecided"],
+        otherInterest: a.notes.trim(),
+        missionInterest: a.missionInterest,
+        aiCoding: a.aiCoding,
+        techExperience: a.experience,
+        techExperienceDetail: a.skills.join(", "),
+        submittedAt: serverTimestamp(),
+        // Extra detail from the website form.
         firstName: a.firstName.trim(),
         lastName: a.lastName.trim(),
-        email: a.email.trim().toLowerCase(),
         phone: a.phone.trim(),
-        major: a.major === "Other / Undecided" ? a.majorOther.trim() : a.major,
-        notes: a.notes.trim(),
+        skills: a.skills,
+        wantToLearn: a.wantToLearn,
         source: "website",
-        createdAt: serverTimestamp(),
       });
       onSubmitted(a);
     } catch (err) {
@@ -129,7 +152,12 @@ export default function JoinForm({
           <div>
             <label htmlFor="email" className="label">Email</label>
             <input id="email" type="email" className={fieldCls("email")} value={a.email} onChange={(e) => set("email", e.target.value)} autoComplete="email" placeholder="you@calbaptist.edu" />
-            {errors.email ? <p className="error-text">{errors.email}</p> : <p className="help">Use your CBU email if you can, since that is the one Teams uses.</p>}
+            {errors.email ? <p className="error-text">{errors.email}</p> : <p className="help">Your CBU email, since that is the one Teams uses.</p>}
+          </div>
+          <div>
+            <label htmlFor="cbuId" className="label">CBU ID number</label>
+            <input id="cbuId" inputMode="numeric" className={fieldCls("cbuId")} value={a.cbuId} onChange={(e) => set("cbuId", e.target.value)} placeholder="123456789" />
+            {errors.cbuId && <p className="error-text">{errors.cbuId}</p>}
           </div>
           <div>
             <label htmlFor="phone" className="label">
@@ -206,7 +234,7 @@ export default function JoinForm({
       {/* Experience */}
       <fieldset id="experience">
         <legend className="text-lg font-semibold">Where are you starting from?</legend>
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {experienceLevels.map((lvl) => {
             const on = a.experience === lvl.id;
             return (
@@ -225,6 +253,33 @@ export default function JoinForm({
         </div>
         {errors.experience && <p className="error-text">{errors.experience}</p>}
       </fieldset>
+
+      {/* Two quick questions */}
+      <div className="grid gap-8 sm:grid-cols-2">
+        {(
+          [
+            ["missionInterest", "Interested in the mission work with AIM?", "Every team is building for Africa Inland Mission this year. No commitment, we just like to know."],
+            ["aiCoding", "Have you used AI to write code?", "Copilot, ChatGPT, Claude, anything. There is no wrong answer."],
+          ] as const
+        ).map(([key, q, help]) => (
+          <fieldset key={key} id={key}>
+            <legend className="font-semibold">{q}</legend>
+            <p className="mt-1 text-sm text-ink-3">{help}</p>
+            <div className="mt-3 flex gap-2">
+              {yesNoMaybe.map((opt) => {
+                const on = a[key] === opt;
+                return (
+                  <label key={opt} className={`chip cursor-pointer !px-4 !py-2 ${on ? "chip-on" : ""}`}>
+                    <input type="radio" name={key} className="sr-only" checked={on} onChange={() => set(key, opt)} />
+                    {opt}
+                  </label>
+                );
+              })}
+            </div>
+            {errors[key] && <p className="error-text">{errors[key]}</p>}
+          </fieldset>
+        ))}
+      </div>
 
       {/* Skills */}
       <fieldset>

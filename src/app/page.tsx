@@ -4,9 +4,10 @@ import type { Metadata } from "next";
 import Reveal from "@/src/components/ui/Reveal";
 import { teams } from "@/src/data/teams";
 import { site } from "@/src/config/site";
+import { aim } from "@/src/data/aim";
 
 export const metadata: Metadata = {
-  title: "ACM @ CBU · Computing club at California Baptist University",
+  title: "ACM | TEC · CBU's computing club",
 };
 
 const steps = [
@@ -47,12 +48,13 @@ export default function Home() {
         <div className="container-x relative py-24 sm:py-32 lg:py-40">
           <p className="eyebrow !text-accent">Student chapter · {site.university}</p>
           <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.05] sm:text-6xl lg:text-7xl">
-            Learn to build things with people who are still figuring it out too.
+            One club. Four ways in.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
-            ACM is the computing club at CBU. There are four teams: competitive programming, cyber
-            defense, software engineering, and game design. Any major can join, and you don&apos;t
-            need any experience.
+            ACM | TEC is CBU&apos;s student-led tech collective. Bring something you want to build
+            and the club gives you the mentors and lab time to build it. Four divisions: software
+            engineering, cybersecurity, game development, and competitive programming. Any major,
+            no experience required.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Link href="/join" className="btn-inverse">
@@ -71,7 +73,7 @@ export default function Home() {
           <Reveal className="grid gap-6 lg:grid-cols-[1fr_2fr] lg:gap-16">
             <div>
               <p className="eyebrow">Four teams</p>
-              <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Pick one, or try a couple.</h2>
+              <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Explore. Build. Compete. Create.</h2>
             </div>
             <p className="max-w-prose text-lg leading-relaxed text-ink-2 lg:pt-9">
               Each team runs its own practices and projects. You can be on more than one, and you
@@ -156,22 +158,58 @@ export default function Home() {
           <Reveal delay={0.1}>
             <p className="eyebrow">Why bother</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
-              Classes teach you the language. Here you learn to finish a project.
+              Real skills and real work for your résumé, not a certificate of attendance.
             </h2>
             <div className="mt-6 space-y-4 text-lg leading-relaxed text-ink-2">
               <p>
-                The projects and contests here look like real work. You are in a repository with
-                other people&apos;s code, there is a deadline, the network is under attack, or the
-                game has to be playable by Sunday.
+                Weekly meetings work like dev standups. You show your progress, get feedback from
+                upperclassmen who have done it before, and make the next call together. Rough ideas
+                are welcome. A smartwatch, an LLM from scratch, a game sitting in your notes app:
+                bring it.
               </p>
               <p>
-                That is the kind of thing that ends up on a résumé and comes up in interviews. It is
-                also how you find the people you will do group projects with for the next four years.
+                The projects look like real work because they are. You are in a repository with
+                other people&apos;s code, there is a deadline, the network is under attack, or the
+                game has to be playable by Sunday. It is also how you find the people you will do
+                group projects with for the next four years.
               </p>
             </div>
             <Link href="/about" className="btn-ghost mt-6 -ml-4">
               More about the chapter <i className="bi bi-arrow-right" />
             </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* AIM partnership */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="container-x grid gap-12 lg:grid-cols-[5fr_7fr] lg:gap-20">
+          <Reveal>
+            <p className="eyebrow">New this year · Partnership</p>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
+              Every division is building for a real client: Africa Inland Mission.
+            </h2>
+            <p className="mt-5 max-w-prose text-lg leading-relaxed text-ink-2">{aim.why}</p>
+            <Link href="/aim" className="btn-primary mt-8">
+              About the partnership <i className="bi bi-arrow-right" />
+            </Link>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="card flex items-center gap-5 p-5">
+              <Image src={aim.logo} alt="Africa Inland Mission International" width={457} height={380} className="h-16 w-auto" />
+              <p className="text-sm leading-relaxed text-ink-2">
+                Founded {aim.founded}. More than 20 countries across Africa, about 1,000 missionaries, and a support hub in
+                Nairobi.
+              </p>
+            </div>
+            <ul className="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
+              {teams.map((t) => (
+                <li key={t.id} className="flex gap-4 px-5 py-4">
+                  <span className="w-12 shrink-0 font-mono text-xs font-semibold text-brand">{t.short}</span>
+                  <span className="text-sm text-ink-2">{aim.byTeam[t.id]}</span>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </section>

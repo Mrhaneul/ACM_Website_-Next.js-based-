@@ -10,16 +10,16 @@ const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: {
-    default: "ACM @ CBU",
-    template: "%s · ACM @ CBU",
+    default: "ACM | TEC at CBU",
+    template: "%s · ACM | TEC",
   },
   description:
-    "The Association for Computing Machinery student chapter at California Baptist University. Competitive programming, cyber defense, software engineering, and game design teams.",
+    "ACM | TEC (Technology Engineering Club) is California Baptist University's student chapter of the Association for Computing Machinery. Software engineering, cybersecurity, game development, and competitive programming.",
   keywords: ["ACM", "Computer Science", "California Baptist University", "Programming", "ICPC", "CCDC"],
-  authors: [{ name: "ACM @ CBU" }],
+  authors: [{ name: "ACM | TEC" }],
   metadataBase: new URL("https://acm-website-459ef.web.app"),
   openGraph: {
-    title: "ACM @ CBU",
+    title: "ACM | TEC at CBU",
     description: "Association for Computing Machinery at California Baptist University",
     type: "website",
     images: ["/home.png"],
