@@ -6,8 +6,9 @@ import Footer from "../Footer/Footer";
 
 export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  // The dashboard has its own chrome.
-  const bare = pathname === "/dashboard" || pathname?.startsWith("/dashboard/");
+  // The dashboard has its own chrome; the linktree is a bare bio-link page.
+  const bare =
+    pathname === "/dashboard" || pathname?.startsWith("/dashboard/") || pathname === "/linktree";
 
   return (
     <>
