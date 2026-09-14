@@ -2,141 +2,98 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/teams", label: "Teams" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
 
-  const menuItems = [
-    { href: "/", label: "Home" },
-    { href: "/teams", label: "Teams" },
-    { href: "/about", label: "About" },
-  ];
+export default function Navbar() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => setOpen(false), [pathname]);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
   return (
-    <>
-      <nav className="bg-white text-black p-4 border-b-[6px] border-[#004AAD] relative z-50">
-        <div className="container mx-auto flex justify-between items-center">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/acm.png"
-              alt="ACM Logo"
-              width={80}
-              height={80}
-              className="w-[60px] h-[60px] min-[1025px]:w-[80px] min-[1025px]:h-[80px]"
-              unoptimized={true}
-            />
-            <span className="font-black text-base min-[1025px]:text-xl">
-              Association for <br /> Computing Machinery
-            </span>
-          </Link>
+    <header className="sticky top-0 z-50 border-b border-line/80 bg-white/85 backdrop-blur-md">
+      <nav className="container-x flex h-[68px] items-center justify-between" aria-label="Primary">
+        <Link href="/" className="flex items-center gap-3">
+          <Image src="/acm.png" alt="" width={40} height={40} className="h-10 w-10" unoptimized />
+          <span className="leading-tight">
+            <span className="block text-[0.95rem] font-semibold text-ink">ACM at CBU</span>
+            <span className="hidden text-xs text-ink-3 sm:block">Association for Computing Machinery</span>
+          </span>
+        </Link>
 
-          {/* Desktop Menu (only shows at 1025px and above) */}
-          <ul className="hidden min-[1025px]:flex items-center space-x-6">
-            {menuItems.map(({ href, label }) => (
-              <li
-                key={href}
-                className="relative pr-3 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-2.5 after:h-2.5 after:bg-[#004AAD] after:rotate-45 after:rounded-sm"
-              >
-                <Link href={href} className="hover:text-[#58cbf7] px-1">
-                  {label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link
-                href="/login"
-                className="bg-[#58cbf7] hover:bg-[#004AAD] text-white font-semibold py-2 px-4 rounded-[8px] transition mr-3"
-              >
-                Sign Up
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact"
-                className="bg-[#004AAD] hover:bg-[#58cbf7] text-white font-semibold py-2 px-4 rounded-[8px] transition"
-              >
-                Let's Connect!
-              </Link>
-            </li>
-          </ul>
-
-          {/* Mobile & Tablet Hamburger Button (shows below 1025px) */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex min-[1025px]:hidden flex-col gap-1.5 p-2 hover:bg-gray-100 rounded transition-colors"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`block w-6 h-0.5 bg-[#004AAD] transition-all duration-300 ${
-                isMenuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            ></span>
-            <span
-              className={`block w-6 h-0.5 bg-[#004AAD] transition-all duration-300 ${
-                isMenuOpen ? "opacity-0" : ""
-              }`}
-            ></span>
-            <span
-              className={`block w-6 h-0.5 bg-[#004AAD] transition-all duration-300 ${
-                isMenuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            ></span>
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile & Tablet Menu Dropdown */}
-      <div
-        className={`fixed top-[88px] left-0 right-0 bg-white shadow-lg transition-all duration-300 ease-in-out z-40 min-[1025px]:hidden ${
-          isMenuOpen
-            ? "max-h-screen opacity-100"
-            : "max-h-0 opacity-0 overflow-hidden"
-        }`}
-      >
-        <ul className="flex flex-col py-4">
-          {menuItems.map(({ href, label }) => (
-            <li key={href} className="border-b border-gray-100">
+        <ul className="hidden items-center gap-1 lg:flex">
+          {links.map(({ href, label }) => (
+            <li key={href}>
               <Link
                 href={href}
-                className="block px-6 py-4 hover:bg-gray-50 hover:text-[#58cbf7] transition-colors"
-                onClick={() => setIsMenuOpen(false)}
+                aria-current={isActive(href) ? "page" : undefined}
+                className={`rounded-md px-3 py-2 text-sm font-medium transition ${
+                  isActive(href) ? "bg-brand/8 text-brand" : "text-ink-2 hover:bg-slate-100 hover:text-ink"
+                }`}
               >
                 {label}
               </Link>
             </li>
           ))}
-          <li className="px-6 py-4">
-            <Link
-              href="/login"
-              className="block text-center bg-[#58cbf7] hover:bg-[#004AAD] text-white font-semibold py-3 px-4 rounded-[8px] transition mb-3"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Sign Up
-            </Link>
-          </li>
-          <li className="px-6 pb-4">
-            <Link
-              href="/contact"
-              className="block text-center bg-[#004AAD] hover:bg-[#58cbf7] text-white font-semibold py-3 px-4 rounded-[8px] transition"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Let's Connect!
+          <li className="ml-2">
+            <Link href="/join" className="btn-primary !py-2.5">
+              Join ACM
             </Link>
           </li>
         </ul>
+
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="flex h-10 w-10 items-center justify-center rounded-md text-ink hover:bg-slate-100 lg:hidden"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-label={open ? "Close menu" : "Open menu"}
+        >
+          <i className={`bi ${open ? "bi-x-lg" : "bi-list"} text-xl`} />
+        </button>
+      </nav>
+
+      <div
+        id="mobile-nav"
+        className={`grid overflow-hidden border-t border-line bg-white transition-[grid-template-rows] duration-300 lg:hidden ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr] border-t-0"
+        }`}
+      >
+        <div className="min-h-0">
+          <ul className="container-x flex flex-col py-3">
+            {links.map(({ href, label }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  aria-current={isActive(href) ? "page" : undefined}
+                  className={`block rounded-md px-3 py-3 text-base font-medium ${
+                    isActive(href) ? "bg-brand/8 text-brand" : "text-ink-2"
+                  }`}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+            <li className="px-3 pb-2 pt-2">
+              <Link href="/join" className="btn-primary w-full">
+                Join ACM
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
-
-      {/* Overlay for mobile & tablet menu */}
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 z-30 min-[1025px]:hidden"
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )}
-    </>
+    </header>
   );
-};
-
-export default Navbar;
+}

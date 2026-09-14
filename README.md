@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ACM at CBU
 
-## Getting Started
+Public website for the Association for Computing Machinery student chapter at California Baptist University. Next.js 15 (App Router), Tailwind 3, Firebase Hosting + Firestore.
 
-First, run the development server:
+Live: https://acm-website-459ef.web.app
+
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build (also type-checks)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| What | Where |
+|---|---|
+| External links (Teams join link, Instagram, email, app store links) | `src/config/site.ts` |
+| Team descriptions, leads, meeting info | `src/data/teams.ts` |
+| Skill taxonomy, majors, years for the join form | `src/data/skills.ts` |
+| Design tokens and shared classes (`btn-primary`, `field`, `card`, ...) | `src/app/globals.css`, `tailwind.config.ts` |
+| Pages | `src/app/{page,teams,about,join,contact}/` |
+| Join flow (form, skill picker, Teams setup guide) | `src/components/Join/` |
+| Firestore security rules | `firestore.rules` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Updating the Microsoft Teams link
 
-## Learn More
+Edit `teamsJoinUrl` in `src/config/site.ts`. Every "Join on Teams" button and the setup guide read from it.
 
-To learn more about Next.js, take a look at the following resources:
+### Form submissions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The join form writes to the `applications` collection and the contact form writes to `messages`. Anyone can create a document (validated by `firestore.rules`); only users whose `users/{uid}.role` is `admin` or `leader` can read them. View submissions in the Firebase console under Firestore.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
+```bash
+firebase deploy                 # hosting + firestore rules
+firebase deploy --only hosting  # just the site
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Member portal (not linked from the site)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`/login` and `/dashboard` are a Firebase Auth member portal from an earlier iteration. They still build and work but nothing on the public site links to them.

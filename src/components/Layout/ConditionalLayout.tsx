@@ -1,25 +1,19 @@
-// src/components/Layout/ConditionalLayout.tsx
 "use client";
 
-import { usePathname } from 'next/navigation';
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
+import { usePathname } from "next/navigation";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 
-interface ConditionalLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function ConditionalLayout({ children }: ConditionalLayoutProps) {
+export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  
-  // Routes where we don't want navbar and footer
-  const hideNavAndFooter = pathname === '/dashboard' || pathname?.startsWith('/dashboard/');
-  
+  // The dashboard has its own chrome.
+  const bare = pathname === "/dashboard" || pathname?.startsWith("/dashboard/");
+
   return (
     <>
-      {!hideNavAndFooter && <Navbar />}
-      {children}
-      {!hideNavAndFooter && <Footer />}
+      {!bare && <Navbar />}
+      <main id="main">{children}</main>
+      {!bare && <Footer />}
     </>
   );
 }

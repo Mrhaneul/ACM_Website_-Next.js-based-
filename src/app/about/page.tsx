@@ -1,121 +1,139 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Reveal from "@/src/components/ui/Reveal";
+import { teams } from "@/src/data/teams";
+import { site } from "@/src/config/site";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "What ACM at California Baptist University is, what it does, and who runs it.",
+};
 
 export default function AboutPage() {
-  const shouldReduceMotion = useReducedMotion();
-
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: shouldReduceMotion ? 0.1 : 0.6, ease: "easeOut" },
-  };
+  const leads = teams.flatMap((t) => t.leads.map((l) => ({ ...l, team: t.short })));
+  // The same person can lead two teams; show them once.
+  const uniqueLeads = leads.filter((l, i) => leads.findIndex((m) => m.name === l.name) === i);
 
   return (
-    <main
-      className="min-h-screen"
-      style={{
-        backgroundImage:
-          "linear-gradient(135deg, rgba(0, 74, 173, 0.8), rgba(88, 203, 247, 0.7)), url('/home.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "scroll",
-      }}
-    >
-      <div className="container mx-auto px-4 py-12">
-        <motion.h1
-          initial={fadeInUp.initial}
-          animate={fadeInUp.animate}
-          transition={{ ...fadeInUp.transition, delay: 0.2 }}
-          className="text-4xl font-bold text-center text-white mb-8"
-        >
-          About ACM @ CBU
-        </motion.h1>
-
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={fadeInUp.initial}
-            animate={fadeInUp.animate}
-            transition={{ ...fadeInUp.transition, delay: 0.3 }}
-            className="bg-white/95 backdrop-blur-sm rounded-lg p-8 mb-8 shadow-lg"
-          >
-            <h2 className="text-2xl font-semibold text-[#004AAD] mb-4">
-              Who We Are
-            </h2>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              The Association for Computing Machinery (ACM) at California
-              Baptist University is a student organization dedicated to
-              advancing computing as a science and profession. We bring together
-              students passionate about computer science, software engineering,
-              cybersecurity, and technology innovation.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <motion.div
-              initial={fadeInUp.initial}
-              animate={fadeInUp.animate}
-              transition={{ ...fadeInUp.transition, delay: 0.4 }}
-              className="bg-white/95 backdrop-blur-sm border-2 border-[#004AAD] rounded-lg p-6 shadow-lg"
-            >
-              <h3 className="text-xl font-semibold text-[#004AAD] mb-3">
-                Our Mission
-              </h3>
-              <p className="text-gray-700">
-                To foster a community of learners and innovators who advance
-                computing technology while integrating Christian values in their
-                professional and academic pursuits.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={fadeInUp.initial}
-              animate={fadeInUp.animate}
-              transition={{ ...fadeInUp.transition, delay: 0.5 }}
-              className="bg-white/95 backdrop-blur-sm border-2 border-[#58cbf7] rounded-lg p-6 shadow-lg"
-            >
-              <h3 className="text-xl font-semibold text-[#004AAD] mb-3">
-                What We Do
-              </h3>
-              <p className="text-gray-700">
-                We organize coding competitions, hackathons, tech talks,
-                networking events, and provide opportunities for hands-on
-                experience through our specialized teams.
-              </p>
-            </motion.div>
+    <>
+      <section className="bg-white">
+        <div className="container-x grid gap-10 py-16 sm:py-24 lg:grid-cols-[3fr_2fr] lg:items-end">
+          <div>
+            <p className="eyebrow">About</p>
+            <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">
+              A student chapter of the oldest computing society in the world.
+            </h1>
           </div>
-
-          <motion.div
-            initial={fadeInUp.initial}
-            animate={fadeInUp.animate}
-            transition={{ ...fadeInUp.transition, delay: 0.6 }}
-            className="bg-gradient-to-r from-[#004AAD] to-[#58cbf7] text-white rounded-lg p-8 text-center shadow-lg"
-          >
-            <h2 className="text-2xl font-semibold mb-4">Join Our Community</h2>
-            <p className="text-lg mb-6">
-              Whether you&apos;re a beginner or an experienced programmer,
-              there&apos;s a place for you in ACM @ CBU!
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/teams"
-                className="bg-white text-[#004AAD] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
-              >
-                Explore Our Teams
-              </Link>
-              <Link
-                href="/contact"
-                className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#004AAD] transition"
-              >
-                Get In Touch
-              </Link>
-            </div>
-          </motion.div>
+          <p className="max-w-prose text-lg text-ink-2">
+            The Association for Computing Machinery was founded in 1947. Our chapter at {site.university} is
+            much younger and much smaller. It exists so computing students here have a place to build things
+            together outside of class.
+          </p>
         </div>
-      </div>
-    </main>
+      </section>
+
+      <section className="py-16 sm:py-24">
+        <div className="container-x grid items-start gap-12 lg:grid-cols-[6fr_5fr] lg:gap-20">
+          <Reveal className="space-y-12">
+            <div>
+              <h2 className="text-2xl font-semibold">Who we are</h2>
+              <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-2">
+                Students who like computers, at every level. Some of us came in with years of programming and
+                some had never opened a terminal. The chapter is organized around four teams because people
+                learn best working on one specific thing with one specific group toward a deadline.
+              </p>
+            </div>
+            <div>
+              <h2 className="text-2xl font-semibold">What we do</h2>
+              <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                {[
+                  ["Compete", "ICPC programming contests and the Collegiate Cyber Defense Competition."],
+                  ["Build", "Real software, including this site and campus AI tools, with code review and deadlines."],
+                  ["Make games", "Game jams and longer projects across code, art, music, and writing."],
+                  ["Meet people", "Tech talks, study sessions, and the group project partners you will keep for four years."],
+                ].map(([t, d]) => (
+                  <li key={t} className="rounded-xl border border-line bg-white p-4">
+                    <p className="font-semibold">{t}</p>
+                    <p className="mt-1 text-sm text-ink-2">{d}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h2 className="text-2xl font-semibold">Our mission</h2>
+              <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-2">
+                To foster a community of learners and innovators who advance computing while integrating
+                Christian values in their professional and academic pursuits.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1} className="lg:sticky lg:top-28">
+            <Image
+              src="/about_img1.png"
+              alt="The atrium of the engineering building at CBU"
+              width={479}
+              height={715}
+              className="w-full rounded-2xl object-cover shadow-[0_30px_60px_-30px_rgba(11,31,68,0.45)]"
+            />
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 sm:py-24">
+        <div className="container-x">
+          <Reveal>
+            <p className="eyebrow">Leadership</p>
+            <h2 className="mt-3 text-3xl font-semibold">Who to talk to</h2>
+            <p className="mt-3 max-w-prose text-ink-2">
+              Team leads are students. Email any of them or use the contact form and a person will answer.
+            </p>
+          </Reveal>
+          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {uniqueLeads.map((l, i) => (
+              <Reveal as="li" key={l.email} delay={i * 0.04} className="card flex items-center gap-4 p-4">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand/8 font-semibold text-brand">
+                  {l.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
+                </span>
+                <div className="min-w-0 flex-1 leading-tight">
+                  <p className="font-medium">{l.name}</p>
+                  <p className="text-sm text-ink-3">
+                    {leads
+                      .filter((m) => m.name === l.name)
+                      .map((m) => m.team)
+                      .join(" · ")}{" "}
+                    · {l.role}
+                  </p>
+                </div>
+                <a
+                  href={`mailto:${l.email}`}
+                  aria-label={`Email ${l.name}`}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-ink-3 transition hover:bg-brand/8 hover:text-brand"
+                >
+                  <i className="bi bi-envelope" />
+                </a>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20">
+        <div className="container-x flex flex-col items-start gap-6 rounded-2xl bg-brand-ink p-8 text-white sm:flex-row sm:items-center sm:justify-between sm:p-10">
+          <div>
+            <h2 className="text-2xl font-semibold">There is room for you whether or not you have experience.</h2>
+            <p className="mt-2 text-white/75">Fill out the form and we will take it from there.</p>
+          </div>
+          <div className="flex gap-3">
+            <Link href="/join" className="btn-inverse">Join ACM</Link>
+            <Link href="/teams" className="btn-outline-inverse">The teams</Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

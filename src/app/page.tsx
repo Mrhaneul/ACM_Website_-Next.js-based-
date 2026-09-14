@@ -1,327 +1,203 @@
-"use client";
-
-import styles from "./page.module.css";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion";
-import { useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { FaTrophy, FaShieldAlt, FaCode, FaGamepad, FaArrowRight } from "react-icons/fa";
-import TextType from "@/src/components/TextType";
-import { useIsMobile, useIsTablet, useIsDesktop } from "../hooks/Responsive";
-const teams = [
+import type { Metadata } from "next";
+import Reveal from "@/src/components/ui/Reveal";
+import { teams } from "@/src/data/teams";
+import { site } from "@/src/config/site";
+
+export const metadata: Metadata = {
+  title: "ACM @ CBU · Computing club at California Baptist University",
+};
+
+const steps = [
   {
-    name: "ICPC",
-    title: "International Collegiate Programming Contest",
-    description:
-      "Sharpen your algorithms and compete globally in prestigious programming competitions",
-    icon: FaTrophy,
-    color: "#004AAD",
-    gradient: "from-blue-600 to-blue-800",
-    members: 15,
-    competitions: 8,
+    n: "01",
+    title: "Tell us about you",
+    text: "A short form asking your year, what you're interested in, and any skills you already have. Only your name and email are required.",
   },
   {
-    name: "CCDC",
-    title: "Collegiate Cyber Defense Competition",
-    description:
-      "Defend networks, learn cybersecurity, and protect against real-world threats",
-    icon: FaShieldAlt,
-    color: "#58cbf7",
-    gradient: "from-cyan-400 to-blue-500",
-    members: 12,
-    competitions: 5,
+    n: "02",
+    title: "Get on Microsoft Teams",
+    text: "Every meeting and practice is announced in Teams. We walk you through installing it on your phone and turning on notifications so you hear about them.",
   },
   {
-    name: "SET",
-    title: "Software Engineering Team",
-    description:
-      "Build real applications, gain industry experience, and create impactful solutions",
-    icon: FaCode,
-    color: "#004AAD",
-    gradient: "from-indigo-600 to-purple-600",
-    members: 20,
-    projects: 8,
-  },
-  {
-    name: "Game Design",
-    title: "Game Design Team",
-    description:
-      "Create engaging games, compete in game jams, and bring your creative visions to life",
-    icon: FaGamepad,
-    color: "#004AAD",
-    gradient: "from-blue-600 to-blue-800",
-    members: 6,
-    projects: 4,
+    n: "03",
+    title: "Show up",
+    text: "Come to a team practice or a general meeting. Someone will introduce themselves and that is the whole onboarding process.",
   },
 ];
 
 export default function Home() {
-  const ref = useRef(null);
-  const shouldReduceMotion = useReducedMotion();
-
-  const isMobile = useIsMobile();
-  const useTablet = useIsTablet();
-  const useDesktop = useIsDesktop();
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
-
   return (
     <>
-      {/* HERO SECTION */}
-      <main ref={ref} className={styles.campus}>
-        <motion.div
-          className={styles.overlay}
-          style={{ y, opacity }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="text-center px-4 max-w-5xl mx-auto">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-black text-white leading-tight mb-8"
-            >
-              <TextType
-                text={["Association for Computing Machinery"]}
-                as="span"
-                typingSpeed={75}
-                showCursor={true}
-                cursorCharacter="_"
-                cursorClassName="text-[#58cbf7]"
-                pauseDuration={1500}
-                loop={false}
-                variableSpeed={null}
-                onSentenceComplete={() => {}}
-              />
-            </motion.h1>
+      {/* Hero */}
+      <section className="relative isolate overflow-hidden bg-brand-ink text-white">
+        <Image
+          src="/home.png"
+          alt="The engineering building at California Baptist University"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[70%_center] opacity-80"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-ink via-brand-ink/75 to-brand-ink/5" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/80 via-transparent to-transparent" />
+        <div className="grain absolute inset-0" />
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto"
-            >
-              Empowering the next generation of computer scientists at
-              California Baptist University
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center"
-            >
-              <Link href="/login" className={styles.blobBtn}>
-                Join ACM Today
-                <span className={styles.blobBtnInner}>
-                  <span className={styles.blobBtnBlobs}>
-                    <span className={styles.blobBtnBlob}></span>
-                    <span className={styles.blobBtnBlob}></span>
-                    <span className={styles.blobBtnBlob}></span>
-                    <span className={styles.blobBtnBlob}></span>
-                  </span>
-                </span>
-              </Link>
-              <Link
-                href="/teams"
-                className={`${styles.blobBtn} ${styles.blobBtnSecondary}`}
-              >
-                Explore Teams
-                <span className={styles.blobBtnInner}>
-                  <span className={styles.blobBtnBlobs}>
-                    <span className={styles.blobBtnBlob}></span>
-                    <span className={styles.blobBtnBlob}></span>
-                    <span className={styles.blobBtnBlob}></span>
-                    <span className={styles.blobBtnBlob}></span>
-                  </span>
-                </span>
-              </Link>
-            </motion.div>
+        <div className="container-x relative py-24 sm:py-32 lg:py-40">
+          <p className="eyebrow !text-accent">Student chapter · {site.university}</p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.05] sm:text-6xl lg:text-7xl">
+            Learn to build things with people who are still figuring it out too.
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
+            ACM is the computing club at CBU. There are four teams: competitive programming, cyber
+            defense, software engineering, and game design. Any major can join, and you don&apos;t
+            need any experience.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Link href="/join" className="btn-inverse">
+              Join ACM <i className="bi bi-arrow-right" />
+            </Link>
+            <Link href="/teams" className="btn-outline-inverse">
+              See the teams
+            </Link>
           </div>
-        </motion.div>
-      </main>
+        </div>
+      </section>
 
-      {/* TEAMS PREVIEW SECTION */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative z-10">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-cyan-400/5 z-0"></div>
-
-        <div className="container mx-auto px-4 relative z-20">
-          <motion.div
-            initial={{ opacity: 0, y: 0 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-6xl font-bold text-[#004AAD] mb-6">
-              Our Teams
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Join one of our specialized teams and dive deep into your passion
-              for technology
+      {/* Teams */}
+      <section className="py-20 sm:py-28">
+        <div className="container-x">
+          <Reveal className="grid gap-6 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <p className="eyebrow">Four teams</p>
+              <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Pick one, or try a couple.</h2>
+            </div>
+            <p className="max-w-prose text-lg leading-relaxed text-ink-2 lg:pt-9">
+              Each team runs its own practices and projects. You can be on more than one, and you
+              can switch later. Most freshmen sit in on two or three during the first month before
+              they settle on one.
             </p>
-          </motion.div>
+          </Reveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {teams.map((team, index) => {
-              const IconComponent = team.icon;
-              return (
-                <motion.div
-                  key={team.name}
-                  // initial={{ opacity: 0, y: 0 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1,
-                    ease: "easeOut",
-                  }}
-                  whileHover={
-                    shouldReduceMotion
-                      ? {}
-                      : { y: -10, transition: { duration: 0.2 } }
-                  }
-                  className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:border-[#58cbf7] transition-all duration-300 overflow-hidden"
+          <ol className="mt-14 divide-y divide-line border-y border-line">
+            {teams.map((t, i) => (
+              <Reveal as="li" key={t.id} delay={i * 0.05}>
+                <Link
+                  href={`/teams#${t.id}`}
+                  className="group grid items-center gap-4 py-7 sm:grid-cols-[3rem_4rem_1fr_auto] sm:gap-8"
                 >
-                  {/* Card Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div
-                      className={`w-16 h-16 bg-gradient-to-br ${team.gradient} rounded-2xl flex items-center justify-center shadow-lg transition-transform duration-200 group-hover:scale-105`}
-                    >
-                      <IconComponent className="text-white text-2xl" />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-[#004AAD]">
-                        {team.name}
-                      </div>
-                      <div className="text-sm text-gray-500 font-medium">
-                        {team.members || team.projects}{" "}
-                        {team.members ? "Members" : "Projects"}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="relative z-10">
-                    <h3 className="text-xl font-bold text-gray-800 mb-3 leading-tight">
-                      {team.title}
+                  <span className="font-mono text-sm text-ink-3">0{i + 1}</span>
+                  <Image
+                    src={t.logo}
+                    alt=""
+                    width={64}
+                    height={64}
+                    className="h-14 w-14 object-contain"
+                    unoptimized
+                  />
+                  <div>
+                    <h3 className="text-xl font-semibold text-ink group-hover:text-brand sm:text-2xl">
+                      {t.name}
+                      <span className="ml-3 font-mono text-sm font-normal text-ink-3">{t.short}</span>
                     </h3>
-
-                    <p className="text-gray-600 leading-relaxed mb-6">
-                      {team.description}
-                    </p>
-
-                    {/* Stats */}
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                      <span className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        Active Team
-                      </span>
-                      {team.competitions && (
-                        <span>{team.competitions} Competitions</span>
-                      )}
-                    </div>
-
-                    {/* Learn More Link */}
-                    <Link
-                      href="/teams"
-                      className="inline-flex items-center gap-2 text-[#004AAD] font-semibold group-hover:text-[#58cbf7] transition-colors duration-300"
-                    >
-                      Learn More
-                      <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform duration-200" />
-                    </Link>
+                    <p className="mt-1 max-w-prose text-ink-2">{t.summary}</p>
                   </div>
+                  <span className="hidden text-brand transition group-hover:translate-x-1 sm:block">
+                    <i className="bi bi-arrow-right text-xl" />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-                  {/* Hover effect */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${team.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
-                  ></div>
-                </motion.div>
-              );
-            })}
+      {/* How joining works */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="container-x">
+          <Reveal className="max-w-2xl">
+            <p className="eyebrow">How joining works</p>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">It takes three steps and there is no interview.</h2>
+          </Reveal>
+          <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+            {steps.map((s, i) => (
+              <Reveal key={s.n} delay={i * 0.08} className="relative border-t-2 border-brand pt-6">
+                <span className="font-mono text-sm text-brand">{s.n}</span>
+                <h3 className="mt-2 text-xl font-semibold">{s.title}</h3>
+                <p className="mt-3 leading-relaxed text-ink-2">{s.text}</p>
+              </Reveal>
+            ))}
           </div>
-
-          {/* Learn More Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <Link
-              href="/teams"
-              className="group inline-flex items-center gap-3 bg-[#004AAD] hover:bg-[#58cbf7] text-white font-bold py-4 px-12 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
-            >
-              <span>Explore All Teams</span>
-              <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-200" />
+          <Reveal className="mt-12">
+            <Link href="/join" className="btn-primary">
+              Start with the form <i className="bi bi-arrow-right" />
             </Link>
-          </motion.div>
+          </Reveal>
         </div>
       </section>
 
-      {/* CALL TO ACTION */}
-      <section className="py-20 bg-gradient-to-r from-[#004AAD] to-[#58cbf7] text-white relative z-10">
-        <div className="container mx-auto px-4 text-center relative z-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Join the Future?
+      {/* Photo + pitch */}
+      <section className="py-20 sm:py-28">
+        <div className="container-x grid items-center gap-12 lg:grid-cols-[5fr_6fr] lg:gap-20">
+          <Reveal className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <Image
+              src="/about_img1.png"
+              alt="Students studying in the engineering building atrium"
+              width={479}
+              height={715}
+              className="w-full rounded-2xl object-cover shadow-[0_30px_60px_-30px_rgba(11,31,68,0.45)]"
+            />
+            <div className="absolute -bottom-5 -right-3 hidden rounded-xl bg-white px-5 py-4 shadow-lg sm:block">
+              <p className="text-xs uppercase tracking-wider text-ink-3">Open to</p>
+              <p className="font-semibold">Every major, every year</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="eyebrow">Why bother</p>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
+              Classes teach you the language. Here you learn to finish a project.
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Start your journey with ACM @ CBU today and connect with
-              like-minded students who share your passion for technology
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 bg-white text-[#004AAD] font-bold py-4 px-12 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
-            >
-              Get Started Now
-              <FaArrowRight className="text-lg" />
+            <div className="mt-6 space-y-4 text-lg leading-relaxed text-ink-2">
+              <p>
+                The projects and contests here look like real work. You are in a repository with
+                other people&apos;s code, there is a deadline, the network is under attack, or the
+                game has to be playable by Sunday.
+              </p>
+              <p>
+                That is the kind of thing that ends up on a résumé and comes up in interviews. It is
+                also how you find the people you will do group projects with for the next four years.
+              </p>
+            </div>
+            <Link href="/about" className="btn-ghost mt-6 -ml-4">
+              More about the chapter <i className="bi bi-arrow-right" />
             </Link>
-          </motion.div>
+          </Reveal>
         </div>
       </section>
 
-      {/* SVG Filter for Blob Effect */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        style={{ position: "absolute", width: 0, height: 0 }}
-      >
-        <defs>
-          <filter id="goo">
-            <feGaussianBlur
-              in="SourceGraphic"
-              result="blur"
-              stdDeviation="10"
-            />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7"
-              result="goo"
-            />
-            <feBlend in2="goo" in="SourceGraphic" result="mix" />
-          </filter>
-        </defs>
-      </svg>
+      {/* Closing CTA */}
+      <section className="relative isolate overflow-hidden bg-brand py-20 text-white sm:py-24">
+        <div className="grain absolute inset-0" />
+        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-accent/25 blur-3xl" />
+        <div className="container-x relative flex flex-col items-start gap-8 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-xl">
+            <h2 className="text-3xl font-semibold sm:text-4xl">New members welcome any week of the semester.</h2>
+            <p className="mt-4 text-lg text-white/80">
+              Fill out the form, get on Teams, and come to the next meeting. It takes less time
+              than reading this page did.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/join" className="btn-inverse">
+              Join ACM
+            </Link>
+            <Link href="/contact" className="btn-outline-inverse">
+              Ask a question
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

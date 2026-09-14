@@ -32,19 +32,6 @@ export default function SignupPage() {
     }
   }, [user, router]);
 
-  // Calculate progress percentage
-  const getFormCompletion = () => {
-    if (!isSignup) return 0;
-    
-    const fields = ['firstName', 'lastName', 'email', 'password', 'confirmPassword'];
-    const filledFields = fields.filter(field => formData[field].trim() !== '');
-    const completion = (filledFields.length / fields.length) * 100;
-    
-    return completion;
-  };
-
-  const formCompletion = getFormCompletion();
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -121,7 +108,7 @@ export default function SignupPage() {
         
         // Show email verification animation
         setShowEmailVerification(true);
-        setSuccess('Account created! Please check your email to verify your account before signing in.');
+        setSuccess('Account created. Check your email for a verification link before signing in.');
         
         // Hide the animation after 4 seconds
         setTimeout(() => {
@@ -149,7 +136,7 @@ export default function SignupPage() {
           return;
         }
         
-        setSuccess('Successfully logged in! Redirecting to dashboard...');
+        setSuccess('Signed in. Taking you to the dashboard.');
         
         // Clear form
         setFormData({
@@ -201,15 +188,6 @@ export default function SignupPage() {
     } finally {
       setFormLoading(false);
     }
-  };
-
-  const getProgressText = () => {
-    if (formCompletion === 0) return "Let's get started!";
-    if (formCompletion > 0 && formCompletion < 40) return "Great start! Keep going...";
-    if (formCompletion >= 40 && formCompletion < 80) return "You're doing awesome!";
-    if (formCompletion >= 80 && formCompletion < 100) return "Almost there!";
-    if (formCompletion === 100) return "Perfect! Ready to join ACM! 🎉";
-    return "";
   };
 
   const handleModeToggle = () => {
@@ -278,7 +256,7 @@ export default function SignupPage() {
                     </path>
                   </svg>
                 </div>
-                <h3 className={styles.emailTitle}>Check Your Email!</h3>
+                <h3 className={styles.emailTitle}>Check your email</h3>
                 <p className={styles.emailText}>
                   We've sent a verification link to<br/>
                   <strong>{formData.email}</strong>
@@ -294,7 +272,7 @@ export default function SignupPage() {
                   </div>
                   <div className={styles.emailStep}>
                     <span className={styles.stepNumber}>3</span>
-                    <span>Come back and login!</span>
+                    <span>Come back and sign in</span>
                   </div>
                 </div>
                 <button 
@@ -311,7 +289,7 @@ export default function SignupPage() {
                   }}
                   className={styles.backToLoginButton}
                 >
-                  Back to Login
+                  Back to sign in
                 </button>
               </div>
             </div>
@@ -321,77 +299,15 @@ export default function SignupPage() {
               <div className={styles.authCard}>
                 <div className={styles.header}>
                   <h1 className={styles.title}>
-                    {isSignup ? 'Join ACM @ CBU' : 'Welcome Back'}
+                    {isSignup ? 'Join ACM @ CBU' : 'Welcome back'}
                   </h1>
                   <p className={styles.subtitle}>
                     {isSignup 
                       ? 'Create your account to get started' 
-                      : 'Login to access your dashboard'
+                      : 'Sign in to your member dashboard'
                     }
                   </p>
                   
-                  {isSignup && (
-                    <div className={styles.progressContainer}>
-                      <div className={styles.progressCircle}>
-                        <svg viewBox="0 0 100 100" className={styles.progressSvg}>
-                          <defs>
-                            <linearGradient id="liquidGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#004AAD">
-                                <animate attributeName="stop-color" 
-                                  values="#004AAD;#58cbf7;#004AAD" 
-                                  dur="3s" 
-                                  repeatCount="indefinite"/>
-                              </stop>
-                              <stop offset="50%" stopColor="#58cbf7">
-                                <animate attributeName="stop-color" 
-                                  values="#58cbf7;#004AAD;#58cbf7" 
-                                  dur="3s" 
-                                  repeatCount="indefinite"/>
-                              </stop>
-                              <stop offset="100%" stopColor="#004AAD">
-                                <animate attributeName="stop-color" 
-                                  values="#004AAD;#58cbf7;#004AAD" 
-                                  dur="3s" 
-                                  repeatCount="indefinite"/>
-                              </stop>
-                            </linearGradient>
-                          </defs>
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="45"
-                            className={styles.progressBg}
-                          />
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="45"
-                            className={styles.progressFill}
-                            style={{
-                              strokeDashoffset: `${283 - (283 * formCompletion) / 100}`,
-                              '--dash-offset': `${283 - (283 * formCompletion) / 100}`
-                            } as React.CSSProperties}
-                          />
-                        </svg>
-                        
-                        <div className={styles.acmText}>
-                          <span className={`${styles.acmLetter} ${formCompletion >= 20 ? styles.visible : ''}`}>
-                            A
-                          </span>
-                          <span className={`${styles.acmLetter} ${formCompletion >= 60 ? styles.visible : ''}`}>
-                            C
-                          </span>
-                          <span className={`${styles.acmLetter} ${formCompletion >= 100 ? styles.visible : ''}`}>
-                            M
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <div className={styles.progressText}>
-                        {getProgressText()}
-                      </div>
-                    </div>
-                  )}
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.form}>
@@ -496,7 +412,7 @@ export default function SignupPage() {
                       ? (isSignup ? 'Creating Account...' : 'Signing In...') 
                       : isSignup 
                         ? 'Create Account' 
-                        : 'Login'
+                        : 'Sign in'
                     }
                   </button>
                 </form>
@@ -509,7 +425,7 @@ export default function SignupPage() {
                       onClick={handleModeToggle}
                       className={styles.switchButton}
                     >
-                      {isSignup ? 'Login' : 'Sign Up'}
+                      {isSignup ? 'Sign in' : 'Sign up'}
                     </button>
                   </p>
                 </div>

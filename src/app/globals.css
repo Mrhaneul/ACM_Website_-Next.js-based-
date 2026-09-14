@@ -3,25 +3,128 @@
 @tailwind utilities;
 
 :root {
-  background-color: #ffffff; 
-  color: #171717;
-  font-family: Arial, Helvetica, sans-serif;
-} 
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} 
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
+  --brand: #004aad;
+  --brand-deep: #003a88;
+  --brand-ink: #0b1f44;
+  --accent: #58cbf7;
+  --paper: #f6f8fb;
+  --surface: #ffffff;
+  --ink: #0f172a;
+  --ink-2: #334155;
+  --ink-3: #64748b;
+  --line: #e2e8f0;
+  --shadow-color: 210 60% 20%;
 }
 
 html {
+  scroll-behavior: smooth;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--brand-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-brand;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold
+      transition duration-200 active:translate-y-px disabled:pointer-events-none disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-brand text-white shadow-[0_8px_20px_-10px_rgba(0,74,173,0.7)] hover:bg-brand-deep;
+  }
+  .btn-secondary {
+    @apply btn border border-line bg-white text-ink hover:border-brand hover:text-brand;
+  }
+  .btn-ghost {
+    @apply btn text-brand hover:bg-brand/5;
+  }
+  .btn-inverse {
+    @apply btn bg-white text-brand hover:bg-slate-100;
+  }
+  .btn-outline-inverse {
+    @apply btn border border-white/40 text-white hover:border-white hover:bg-white/10;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-[0.95rem] text-ink
+      placeholder:text-ink-3/70 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10;
+  }
+  .field-error {
+    @apply border-red-400 focus:border-red-500 focus:ring-red-500/10;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink-2;
+  }
+  .help {
+    @apply mt-1.5 text-xs text-ink-3;
+  }
+  .error-text {
+    @apply mt-1.5 text-xs font-medium text-red-600;
+  }
+
+  .card {
+    @apply rounded-2xl bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04),0_12px_32px_-16px_rgba(11,31,68,0.18)];
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-md border border-line bg-white px-2.5 py-1.5 text-sm text-ink-2
+      transition hover:border-brand/50 hover:text-brand;
+  }
+  .chip-on {
+    @apply border-brand bg-brand text-white hover:border-brand hover:text-white;
+  }
+}
+
+/* Fine grain so large flat surfaces don't read as sterile. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
