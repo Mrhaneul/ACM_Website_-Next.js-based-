@@ -13,7 +13,6 @@ const links = [
   { href: "/join", external: false, icon: "bi-clipboard-check", title: "Register", text: "Two minutes, then Teams setup" },
   { href: site.instagram, external: true, icon: "bi-instagram", title: "Instagram", text: "@acm_cbu" },
   { href: "/", external: false, icon: "bi-globe2", title: "ACM website", text: "Teams, the AIM partnership, contact" },
-  { href: `mailto:${site.email}`, external: true, icon: "bi-envelope", title: "Email the president", text: site.email },
 ];
 
 export default function LinktreePage() {
