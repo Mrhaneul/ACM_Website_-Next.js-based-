@@ -31,8 +31,10 @@ Edit `teamsJoinCode` in `src/config/site.ts`. "Join on Teams" buttons go to `/li
 
 ### Form submissions
 
-- **Join form (`/join`)** writes to the `registrations` collection in the **acm-cbu-open-house** Firebase project (see `src/lib/firebase-registration.ts`). It needs the `NEXT_PUBLIC_REG_*` values from `.env.local.example` in a `.env.local` file, both locally and in the deploy environment. `/register/admin` lists submissions and exports CSV; `/register` redirects to `/join`.
-- **Contact form** writes to `messages` in the main project. Anyone can create (validated by `firestore.rules`); only users whose `users/{uid}.role` is `admin` or `leader` can read.
+- **Join form (`/join`)** writes to the `registrations` collection. `/register/admin` lists submissions, shows per-team counts, and exports CSV. To use it, create an account at `/login` with your CBU email, verify it, then sign in on the admin page. Only emails listed as officers (`src/config/site.ts`) or team leads (`src/data/teams.ts`) can read; that allowlist is duplicated in `firestore.rules`, so update both when leadership changes. `/register` redirects to `/join`.
+- **Contact form** writes to `messages`. Same read rules.
+
+No environment variables are required.
 
 ### AIM partnership
 

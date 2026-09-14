@@ -4,9 +4,18 @@ service cloud.firestore {
 
     function isSignedIn() { return request.auth != null; }
     function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
-    function isStaff() {
+    // Officers and team leads. Keep in sync with src/config/site.ts and
+    // src/data/teams.ts (src/lib/staff.ts mirrors this for the UI).
+    function isStaffEmail() {
       return isSignedIn()
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'leader'];
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower() in ['andrewwillis771@outlook.com', 'brandon.magana@calbaptist.edu', 'calebjohn.vanrandwyk@calbaptist.edu', 'eli.manning@calbaptist.edu', 'jeremymatthew.freeman@calbaptist.edu', 'williamjames.anklam@calbaptist.edu'];
+    }
+    function isStaff() {
+      return isStaffEmail()
+        || (isSignedIn()
+          && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'leader']);
     }
     function isEmail(s) { return s is string && s.size() <= 254 && s.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$'); }
     function shortStr(s, n) { return s is string && s.size() <= n; }
@@ -23,6 +32,24 @@ service cloud.firestore {
     match /projects/{id} {
       allow read: if isSignedIn();
       allow create, update, delete: if isSignedIn();
+    }
+
+    // Join form (/join). Anyone can submit; officers and leads read/export
+    // from /register/admin.
+    match /registrations/{id} {
+      allow create: if
+        shortStr(request.resource.data.fullName, 160) && request.resource.data.fullName.size() > 0
+        && isEmail(request.resource.data.cbuEmail)
+        && shortStr(request.resource.data.cbuId, 20)
+        && shortStr(request.resource.data.major, 120)
+        && shortStr(request.resource.data.classYear, 40)
+        && request.resource.data.teams is list && request.resource.data.teams.size() <= 5
+        && shortStr(request.resource.data.otherInterest, 2000)
+        && shortStr(request.resource.data.missionInterest, 10)
+        && shortStr(request.resource.data.aiCoding, 10)
+        && shortStr(request.resource.data.techExperience, 20)
+        && shortStr(request.resource.data.techExperienceDetail, 2000);
+      allow read, update, delete: if isStaff();
     }
 
     // Contact form. Anyone can submit; only leads/admins can read.
