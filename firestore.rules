@@ -4,15 +4,12 @@ service cloud.firestore {
 
     function isSignedIn() { return request.auth != null; }
     function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
-    // Officers and team leads. Keep in sync with src/config/site.ts and
-    // src/data/teams.ts (src/lib/staff.ts mirrors this for the UI).
-    function isStaffEmail() {
-      return isSignedIn()
-        && request.auth.token.email_verified == true
-        && request.auth.token.email.lower() in ['andrewwillis771@outlook.com', 'brandon.magana@calbaptist.edu', 'calebjohn.vanrandwyk@calbaptist.edu', 'eli.manning@calbaptist.edu', 'jeremymatthew.freeman@calbaptist.edu', 'williamjames.anklam@calbaptist.edu'];
+    // The single shared admin login used by /register/admin.
+    function isAdminAccount() {
+      return isSignedIn() && request.auth.token.email == 'admin@acm-website-459ef.web.app';
     }
     function isStaff() {
-      return isStaffEmail()
+      return isAdminAccount()
         || (isSignedIn()
           && exists(/databases/$(database)/documents/users/$(request.auth.uid))
           && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'leader']);
@@ -34,7 +31,7 @@ service cloud.firestore {
       allow create, update, delete: if isSignedIn();
     }
 
-    // Join form (/join). Anyone can submit; officers and leads read/export
+    // Join form (/join). Anyone can submit; the admin account reads/exports
     // from /register/admin.
     match /registrations/{id} {
       allow create: if

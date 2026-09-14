@@ -31,7 +31,7 @@ Edit `teamsJoinCode` in `src/config/site.ts`. "Join on Teams" buttons go to `/li
 
 ### Form submissions
 
-- **Join form (`/join`)** writes to the `registrations` collection. `/register/admin` lists submissions, shows per-team counts, and exports CSV. To use it, create an account at `/login` with your CBU email, verify it, then sign in on the admin page. Only emails listed as officers (`src/config/site.ts`) or team leads (`src/data/teams.ts`) can read; that allowlist is duplicated in `firestore.rules`, so update both when leadership changes. `/register` redirects to `/join`.
+- **Join form (`/join`)** writes to the `registrations` collection. `/register/admin` lists submissions, shows per-team counts, and exports CSV behind one shared admin password. That password belongs to the Firebase Auth user `admin@acm-website-459ef.web.app`; change it in the Firebase console under Authentication → Users. `firestore.rules` only lets that account read. `/register` redirects to `/join`.
 - **Contact form** writes to `messages`. Same read rules.
 
 No environment variables are required.

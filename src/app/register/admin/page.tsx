@@ -12,11 +12,12 @@ import {
 } from "firebase/firestore";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Link from "next/link";
 import { auth } from "@/src/lib/firebase";
 import { registrationDb, REGISTRATIONS_COLLECTION } from "@/src/lib/firebase-registration";
-import { isStaffEmail } from "@/src/lib/staff";
 import { buildCsv, downloadCsv } from "@/src/lib/csv";
+
+/** The one shared admin login. Password is set in Firebase Auth, not in code. */
+const ADMIN_EMAIL = "admin@acm-website-459ef.web.app";
 const TEAM_OPTIONS = ["SET", "NCCDC", "ICPC", "Game Design", "Undecided"];
 
 interface Registration {
@@ -37,8 +38,7 @@ interface Registration {
 
 export default function AdminPage() {
   const [user, authLoading] = useAuthState(auth);
-  const authenticated = !!user && user.emailVerified && isStaffEmail(user.email);
-  const [email, setEmail] = useState("");
+  const authenticated = !!user && user.email === ADMIN_EMAIL;
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [registrations, setRegistrations] = useState<Registration[]>([]);
@@ -48,11 +48,10 @@ export default function AdminPage() {
     e.preventDefault();
     setPasswordError("");
     try {
-      const cred = await signInWithEmailAndPassword(auth, email.trim(), password);
-      if (!cred.user.emailVerified) setPasswordError("Verify your email first (check your inbox), then sign in again.");
-      else if (!isStaffEmail(cred.user.email)) setPasswordError("This account isn't on the officer or team lead list.");
+      if (user && user.email !== ADMIN_EMAIL) await signOut(auth);
+      await signInWithEmailAndPassword(auth, ADMIN_EMAIL, password);
     } catch {
-      setPasswordError("Wrong email or password.");
+      setPasswordError("Incorrect password.");
     }
   }
 
@@ -127,40 +126,22 @@ export default function AdminPage() {
             <p className="text-center text-gray-500">Checking sign-in…</p>
           ) : (
             <form onSubmit={handleLogin} className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 space-y-4">
-              <h2 className="text-xl font-bold text-[#004AAD] text-center">Officers and team leads</h2>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@calbaptist.edu"
-                autoComplete="email"
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#58cbf7]"
-              />
+              <h2 className="text-xl font-bold text-[#004AAD] text-center">Admin access</h2>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder="Admin password"
                 autoComplete="current-password"
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#58cbf7]"
               />
               {passwordError && <p className="text-red-700 text-sm">{passwordError}</p>}
-              {user && !isStaffEmail(user.email) && (
-                <p className="text-sm text-gray-600">
-                  Signed in as {user.email}, which isn&apos;t on the list.{" "}
-                  <button type="button" onClick={() => signOut(auth)} className="underline">Sign out</button>
-                </p>
-              )}
               <button
                 type="submit"
                 className="w-full py-2.5 bg-[#004AAD] text-white font-semibold rounded-full hover:bg-[#58cbf7] transition-colors cursor-pointer"
               >
-                Sign in
+                Enter
               </button>
-              <p className="text-center text-xs text-gray-500">
-                No account yet?{" "}
-                <Link href="/login" className="underline">Create one with your CBU email</Link>, verify it, then come back.
-              </p>
             </form>
           )}
         </div>
