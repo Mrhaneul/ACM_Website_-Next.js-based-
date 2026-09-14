@@ -5,11 +5,11 @@ import { site } from "@/src/config/site";
 
 export const metadata: Metadata = {
   title: "Links",
-  description: "Every ACM | TEC link in one place: Microsoft Teams, registration, Instagram, and the website.",
+  description: "Every ACM | TEC link in one place: Microsoft Teams setup, registration, Instagram, and the website.",
 };
 
 const links = [
-  { href: site.teamsJoinUrl, external: true, icon: "bi-microsoft-teams", title: "Join our Teams", text: `Or use code ${site.teamsJoinCode}` },
+  { href: "/join?step=teams", external: false, icon: "bi-microsoft-teams", title: "Join our Teams", text: "Install, sign in, join, turn on notifications" },
   { href: "/join", external: false, icon: "bi-clipboard-check", title: "Register", text: "Two minutes, then Teams setup" },
   { href: site.instagram, external: true, icon: "bi-instagram", title: "Instagram", text: "@acm_cbu" },
   { href: "/", external: false, icon: "bi-globe2", title: "ACM website", text: "Teams, the AIM partnership, contact" },
@@ -66,23 +66,6 @@ export default function LinktreePage() {
             );
           })}
         </ul>
-
-        <div className="mt-8 rounded-2xl border border-white/15 bg-white/5 p-5 text-center backdrop-blur">
-          <p className="text-xs uppercase tracking-wider text-white/60">Teams join code</p>
-          <p className="mt-1 font-mono text-3xl font-semibold tracking-[0.2em] text-white">{site.teamsJoinCode}</p>
-          <p className="mt-2 text-sm text-white/70">
-            In Teams: Teams → Join a team with a code.{" "}
-            <Link href="/join?step=teams" className="font-medium text-white underline underline-offset-2">
-              Step-by-step guide
-            </Link>
-          </p>
-        </div>
-
-        <p className="mt-10 text-center text-xs text-white/50">
-          <Link href="/" className="hover:text-white">
-            acm-website-459ef.web.app
-          </Link>
-        </p>
       </div>
     </section>
   );
