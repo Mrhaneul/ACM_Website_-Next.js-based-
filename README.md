@@ -48,9 +48,13 @@ npm test   # vitest: csv + registration validators
 
 ## Deploy
 
+The site is a static export (`output: "export"` in `next.config.ts`); `next build` writes `out/` and Firebase Hosting serves it. No Cloud Functions, no server.
+
 ```bash
-firebase deploy                 # hosting + firestore rules
-firebase deploy --only hosting  # just the site
+npm run build
+firebase deploy                          # hosting + firestore rules
+firebase deploy --only hosting           # just the site
+firebase deploy --only firestore:rules   # just the rules
 ```
 
 ## Member portal (not linked from the site)
