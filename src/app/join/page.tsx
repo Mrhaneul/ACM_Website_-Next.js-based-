@@ -13,7 +13,7 @@ export default function JoinPage() {
       <section className="border-b border-line bg-white">
         <div className="container-x py-14 sm:py-20">
           <p className="eyebrow">Join ACM</p>
-          <h1 className="mt-3 max-w-2xl text-4xl font-semibold sm:text-5xl">There are no dues and you don&apos;t need experience.</h1>
+          <h1 className="mt-3 max-w-2xl text-4xl font-semibold sm:text-5xl">Two minutes to sign up, then we get you on Teams.</h1>
           <p className="mt-5 max-w-prose text-lg text-ink-2">
             Tell us a little about yourself so the leads know who is coming, then get Microsoft Teams on your phone so
             you hear about meetings. That is all there is to it.
