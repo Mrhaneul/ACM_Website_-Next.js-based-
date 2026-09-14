@@ -10,6 +10,7 @@ const nav = [
   { href: "/about", label: "About" },
   { href: "/join", label: "Join" },
   { href: "/contact", label: "Contact" },
+  { href: "/linktree", label: "All links" },
 ];
 
 export default function Footer() {
@@ -58,14 +59,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a
-                  href={site.teamsJoinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-ink-2 hover:text-brand"
-                >
+                <Link href={site.linktree} className="inline-flex items-center gap-2 text-sm text-ink-2 hover:text-brand">
                   <i className="bi bi-microsoft-teams w-4" /> Microsoft Teams
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

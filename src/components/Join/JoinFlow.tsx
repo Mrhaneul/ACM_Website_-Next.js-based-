@@ -125,8 +125,8 @@ export default function JoinFlow() {
               {[
                 {
                   icon: "bi-megaphone",
-                  title: "Watch the General channel",
-                  text: "The next general meeting and each team's practice times are posted there. Say hi in the thread for new members when you see it.",
+                  title: "Say hi in the Introductions channel",
+                  text: `A name, a major, and what you're curious about is plenty. The General channel has the meeting announcements; the general meeting is ${site.meeting.when} in ${site.meeting.where}.`,
                 },
                 {
                   icon: "bi-people",
@@ -149,9 +149,9 @@ export default function JoinFlow() {
               ))}
             </ul>
             <div className="mt-10 flex flex-wrap gap-3">
-              <a href={site.teamsJoinUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
-                <i className="bi bi-microsoft-teams" /> Open ACM in Teams
-              </a>
+              <Link href={site.linktree} className="btn-primary">
+                <i className="bi bi-microsoft-teams" /> Join ACM on Teams
+              </Link>
               <Link href="/teams" className="btn-secondary">
                 Read about the teams
               </Link>

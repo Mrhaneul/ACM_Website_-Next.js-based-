@@ -61,6 +61,13 @@ export default function AboutPage() {
               </ul>
             </div>
             <div>
+              <h2 className="text-2xl font-semibold">When we meet</h2>
+              <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-2">
+                The general meeting is {site.meeting.when} in {site.meeting.where}. Each team also runs its own
+                practices; those times are posted in the team&apos;s channel on Microsoft Teams.
+              </p>
+            </div>
+            <div>
               <h2 className="text-2xl font-semibold">Our mission</h2>
               <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-2">
                 To foster a community of learners and innovators who advance computing while integrating
@@ -87,10 +94,44 @@ export default function AboutPage() {
             <p className="eyebrow">Leadership</p>
             <h2 className="mt-3 text-3xl font-semibold">Who to talk to</h2>
             <p className="mt-3 max-w-prose text-ink-2">
-              Team leads are students. Email any of them or use the contact form and a person will answer.
+              Officers and team leads are students. Email any of them or use the contact form and a person will answer.
             </p>
           </Reveal>
           <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {site.officers.map((o, i) => (
+              <Reveal as="li" key={o.email} delay={i * 0.04} className="card flex items-center gap-4 border border-brand/20 p-4">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand font-semibold text-white">
+                  {o.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
+                </span>
+                <div className="min-w-0 flex-1 leading-tight">
+                  <p className="font-medium">{o.name}</p>
+                  <p className="text-sm text-ink-3">{o.role}</p>
+                </div>
+                <a
+                  href={`mailto:${o.email}`}
+                  aria-label={`Email ${o.name}`}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-ink-3 transition hover:bg-brand/8 hover:text-brand"
+                >
+                  <i className="bi bi-envelope" />
+                </a>
+              </Reveal>
+            ))}
+            <Reveal as="li" delay={0.08} className="card flex items-center gap-4 p-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 font-semibold text-ink-2">
+                {site.advisor.name
+                  .replace("Prof. ", "")
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </span>
+              <div className="min-w-0 flex-1 leading-tight">
+                <p className="font-medium">{site.advisor.name}</p>
+                <p className="text-sm text-ink-3">{site.advisor.role}</p>
+              </div>
+            </Reveal>
             {uniqueLeads.map((l, i) => (
               <Reveal as="li" key={l.email} delay={i * 0.04} className="card flex items-center gap-4 p-4">
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand/8 font-semibold text-brand">
@@ -118,6 +159,19 @@ export default function AboutPage() {
                 </a>
               </Reveal>
             ))}
+            {teams
+              .filter((t) => t.leads.length === 0)
+              .map((t) => (
+                <Reveal as="li" key={t.id} className="flex items-center gap-4 rounded-2xl border border-dashed border-line p-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-ink-3">
+                    <i className="bi bi-person-plus" />
+                  </span>
+                  <div className="min-w-0 flex-1 leading-tight">
+                    <p className="font-medium">{t.short} lead: open</p>
+                    <p className="text-sm text-ink-3">Interested? Email the president.</p>
+                  </div>
+                </Reveal>
+              ))}
           </ul>
         </div>
       </section>

@@ -17,25 +17,32 @@ export default function ContactPage() {
           <p className="eyebrow">Contact</p>
           <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">Ask us anything.</h1>
           <p className="mt-5 max-w-prose text-lg text-ink-2">
-            Not sure which team fits, can&apos;t make the meeting time, or want to run a workshop? Send it here. A
-            student reads every message.
+            Not sure which team fits, can&apos;t make the meeting time, or want to run a workshop? Send it here. It
+            goes to the chapter president.
           </p>
 
           <dl className="mt-10 space-y-5 text-sm">
             <div>
-              <dt className="text-ink-3">Email</dt>
+              <dt className="text-ink-3">Chapter president</dt>
               <dd>
+                {site.officers[0].name} ·{" "}
                 <a href={`mailto:${site.email}`} className="font-medium text-brand hover:underline">
                   {site.email}
                 </a>
               </dd>
             </div>
             <div>
+              <dt className="text-ink-3">General meeting</dt>
+              <dd>
+                {site.meeting.when}, {site.meeting.where}
+              </dd>
+            </div>
+            <div>
               <dt className="text-ink-3">Microsoft Teams</dt>
               <dd>
-                <a href={site.teamsJoinUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-brand hover:underline">
+                <Link href={site.linktree} className="font-medium text-brand hover:underline">
                   Join the ACM team
-                </a>{" "}
+                </Link>{" "}
                 <span className="text-ink-3">(the fastest way to reach everyone)</span>
               </dd>
             </div>
@@ -53,6 +60,7 @@ export default function ContactPage() {
                 {teams.map((t) => (
                   <div key={t.id}>
                     <span className="font-mono text-xs text-ink-3">{t.short}</span>{" "}
+                    {t.leads.length === 0 && <span className="text-ink-3">looking for a lead</span>}
                     {t.leads.map((l, i) => (
                       <span key={l.email}>
                         {i > 0 && ", "}

@@ -23,7 +23,7 @@ const steps = [
   {
     n: "03",
     title: "Show up",
-    text: "Come to a team practice or a general meeting. Someone will introduce themselves and that is the whole onboarding process.",
+    text: `Come to a team practice or the general meeting (${site.meeting.when}, ${site.meeting.where}). Someone will introduce themselves and that is the whole onboarding process.`,
   },
 ];
 
@@ -184,8 +184,8 @@ export default function Home() {
           <div className="max-w-xl">
             <h2 className="text-3xl font-semibold sm:text-4xl">New members welcome any week of the semester.</h2>
             <p className="mt-4 text-lg text-white/80">
-              Fill out the form, get on Teams, and come to the next meeting. It takes less time
-              than reading this page did.
+              Fill out the form, get on Teams, and come to the next meeting: {site.meeting.when} in{" "}
+              {site.meeting.where}. It takes less time than reading this page did.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

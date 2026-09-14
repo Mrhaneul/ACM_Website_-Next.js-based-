@@ -60,6 +60,19 @@ export default function TeamSection({ team, index }: { team: Team; index: number
 
         <Reveal className="mt-14">
           <h3 className="text-sm font-semibold uppercase tracking-wider text-ink-3">Leads</h3>
+          {team.leads.length === 0 && (
+            <div className="mt-4 flex flex-col gap-3 rounded-2xl border border-dashed border-brand/40 bg-brand/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="font-medium">This team is looking for a student lead.</p>
+                <p className="mt-1 text-sm text-ink-2">
+                  If you want to run it, or just want to know when practices start, email {site.officers[0].name.split(" ")[0]}.
+                </p>
+              </div>
+              <a href={`mailto:${site.email}`} className="btn-secondary shrink-0">
+                <i className="bi bi-envelope" /> Email the president
+              </a>
+            </div>
+          )}
           <ul className="mt-4 flex flex-wrap gap-3">
             {team.leads.map((l) => (
               <li key={l.email} className="card flex items-center gap-4 px-4 py-3">
@@ -91,15 +104,17 @@ export default function TeamSection({ team, index }: { team: Team; index: number
         <Reveal className="mt-12 flex flex-col gap-5 rounded-2xl bg-brand-ink p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div className="max-w-xl">
             <p className="font-semibold">How to join {team.short}</p>
-            <p className="mt-1 text-white/75">{team.joinNote}</p>
+            <p className="mt-1 text-white/75">
+              {team.joinNote} Look for the <strong className="font-medium text-white">{team.channel}</strong> channel in Teams.
+            </p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3">
             <Link href={`/join?team=${team.id}`} className="btn-inverse">
               Join through the form
             </Link>
-            <a href={site.teamsJoinUrl} target="_blank" rel="noopener noreferrer" className="btn-outline-inverse">
-              <i className="bi bi-microsoft-teams" /> Open in Teams
-            </a>
+            <Link href={site.linktree} className="btn-outline-inverse">
+              <i className="bi bi-microsoft-teams" /> Join on Teams
+            </Link>
           </div>
         </Reveal>
       </div>

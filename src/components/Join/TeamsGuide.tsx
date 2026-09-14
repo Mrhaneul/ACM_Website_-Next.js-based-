@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { site } from "@/src/config/site";
 
 type Device = "ios" | "android" | "desktop";
@@ -17,10 +18,8 @@ type Step = {
   action?: Partial<Record<Device, { label: string; href: string }>>;
 };
 
-const JoinLink = () => (
-  <a href={site.teamsJoinUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-brand underline underline-offset-2">
-    ACM join link
-  </a>
+const Code = () => (
+  <code className="rounded-md bg-brand/8 px-1.5 py-0.5 font-mono text-[0.95em] font-semibold text-brand">{site.teamsJoinCode}</code>
 );
 
 const steps: Step[] = [
@@ -48,14 +47,31 @@ const steps: Step[] = [
   {
     title: "Join the ACM team",
     body: {
-      ios: <>Tap the <JoinLink /> on your phone. It opens in the Teams app; tap <strong>Join</strong>. If it opens in Safari instead, tap <strong>Open in app</strong>.</>,
-      android: <>Tap the <JoinLink /> on your phone. It opens in the Teams app; tap <strong>Join</strong>. If it opens in Chrome instead, choose <strong>Open in Teams</strong>.</>,
-      desktop: <>Open the <JoinLink /> and click <strong>Join</strong>. The team shows up in the left sidebar under Teams.</>,
+      ios: (
+        <>
+          Tap <strong>Teams</strong> at the bottom, then the <strong>⋯</strong> or <strong>+</strong> in the top corner →{" "}
+          <strong>Join a team with a code</strong>. Enter <Code /> and tap <strong>Join</strong>. You can also use the link on our{" "}
+          <Link href={site.linktree} className="font-medium text-brand underline underline-offset-2">links page</Link>.
+        </>
+      ),
+      android: (
+        <>
+          Tap <strong>Teams</strong> at the bottom, then the <strong>⋯</strong> or <strong>+</strong> in the top corner →{" "}
+          <strong>Join a team with a code</strong>. Enter <Code /> and tap <strong>Join</strong>. You can also use the link on our{" "}
+          <Link href={site.linktree} className="font-medium text-brand underline underline-offset-2">links page</Link>.
+        </>
+      ),
+      desktop: (
+        <>
+          Click <strong>Teams</strong> in the left sidebar → <strong>Join or create a team</strong> (bottom left) →{" "}
+          <strong>Join a team with a code</strong>. Enter <Code /> and click <strong>Join</strong>. The team then shows up in the sidebar.
+        </>
+      ),
     },
     action: {
-      ios: { label: "Join ACM on Teams", href: site.teamsJoinUrl },
-      android: { label: "Join ACM on Teams", href: site.teamsJoinUrl },
-      desktop: { label: "Join ACM on Teams", href: site.teamsJoinUrl },
+      ios: { label: "Open our links page", href: site.linktree },
+      android: { label: "Open our links page", href: site.linktree },
+      desktop: { label: "Open our links page", href: site.linktree },
     },
   },
   {
@@ -93,17 +109,17 @@ const steps: Step[] = [
     body: {
       ios: (
         <>
-          Open the ACM team and tap the channel for your team (or General). Tap the channel name → <strong>Notifications</strong> → <strong>All new posts</strong>. If a channel is missing, tap <strong>See all channels</strong> and turn on <strong>Show</strong> for it.
+          The ACM team has a <strong>General</strong> channel for announcements, <strong>Introductions</strong> for saying hi, and one channel per team: <strong>ICPC</strong>, <strong>Cybersecurity</strong>, <strong>SET</strong>, and <strong>Game Dev</strong>. Open General and each team channel you care about, tap the channel name → <strong>Notifications</strong> → <strong>All new posts</strong>. If a channel is missing, tap <strong>See all channels</strong> and turn on <strong>Show</strong> for it.
         </>
       ),
       android: (
         <>
-          Open the ACM team and tap the channel for your team (or General). Tap the channel name → <strong>Notifications</strong> → <strong>All new posts</strong>. If a channel is missing, tap <strong>See all channels</strong> and turn on <strong>Show</strong> for it.
+          The ACM team has a <strong>General</strong> channel for announcements, <strong>Introductions</strong> for saying hi, and one channel per team: <strong>ICPC</strong>, <strong>Cybersecurity</strong>, <strong>SET</strong>, and <strong>Game Dev</strong>. Open General and each team channel you care about, tap the channel name → <strong>Notifications</strong> → <strong>All new posts</strong>. If a channel is missing, tap <strong>See all channels</strong> and turn on <strong>Show</strong> for it.
         </>
       ),
       desktop: (
         <>
-          In the ACM team, hover a channel → <strong>⋯</strong> → <strong>Channel notifications</strong> → <strong>All activity</strong>. Hidden channels are under <strong>See all channels</strong>.
+          The ACM team has a <strong>General</strong> channel for announcements, <strong>Introductions</strong> for saying hi, and one channel per team: <strong>ICPC</strong>, <strong>Cybersecurity</strong>, <strong>SET</strong>, and <strong>Game Dev</strong>. Hover General and each team channel you care about → <strong>⋯</strong> → <strong>Channel notifications</strong> → <strong>All activity</strong>. Hidden channels are under <strong>See all channels</strong>.
         </>
       ),
     },
@@ -143,11 +159,15 @@ export default function TeamsGuide() {
               <div className="min-w-0 flex-1">
                 <h3 className="font-semibold">{s.title}</h3>
                 <div className="mt-2 leading-relaxed text-ink-2">{s.body[device]}</div>
-                {action && (
+                {action && action.href.startsWith("/") ? (
+                  <Link href={action.href} className="btn-secondary mt-4 !py-2 text-sm">
+                    <i className="bi bi-link-45deg" /> {action.label}
+                  </Link>
+                ) : action ? (
                   <a href={action.href} target="_blank" rel="noopener noreferrer" className="btn-secondary mt-4 !py-2 text-sm">
                     <i className="bi bi-box-arrow-up-right" /> {action.label}
                   </a>
-                )}
+                ) : null}
               </div>
             </li>
           );

@@ -24,9 +24,9 @@ npm run build    # production build (also type-checks)
 | Join flow (form, skill picker, Teams setup guide) | `src/components/Join/` |
 | Firestore security rules | `firestore.rules` |
 
-### Updating the Microsoft Teams link
+### Updating the Microsoft Teams join code
 
-Edit `teamsJoinUrl` in `src/config/site.ts`. Every "Join on Teams" button and the setup guide read from it.
+Edit `teamsJoinCode` in `src/config/site.ts`. "Join on Teams" buttons go to `/linktree`, which shows the code, and the setup guide on `/join` reads it too. Officers, advisor, and the general meeting time live in the same file.
 
 ### Form submissions
 

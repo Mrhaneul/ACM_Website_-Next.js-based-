@@ -17,6 +17,8 @@ export type Team = {
   facts: { label: string; value: string }[];
   highlight?: { label: string; text: string };
   leads: TeamLead[];
+  /** Channel name inside the ACM team on Microsoft Teams. */
+  channel: string;
   joinNote: string;
 };
 
@@ -43,18 +45,14 @@ export const teams: Team[] = [
       { label: "Format", value: "3-person teams" },
       { label: "Focus", value: "Algorithmic problem solving" },
       { label: "Scope", value: "Regional and global contests" },
+      { label: "Practice", value: "Check the ICPC channel on Teams" },
     ],
     highlight: {
       label: "Why join",
       text: "The problems you practice here are the same kind that show up in technical interviews.",
     },
-    leads: [
-      {
-        name: "Joshua Baeza",
-        role: "Team lead",
-        email: "JoshuaAlexander.Baeza@calbaptist.edu",
-      },
-    ],
+    leads: [],
+    channel: "ICPC",
     joinNote:
       "You don't need contest experience. If you can write a loop you can start. Practice sessions are open to everyone.",
   },
@@ -79,7 +77,7 @@ export const teams: Team[] = [
     ],
     facts: [
       { label: "Team size", value: "12 to 15 members" },
-      { label: "Practice", value: "3 days a week" },
+      { label: "Practice", value: "3 days a week; times in the Cybersecurity channel on Teams" },
       { label: "Current goal", value: "Top 10 in the region" },
     ],
     highlight: {
@@ -88,14 +86,14 @@ export const teams: Team[] = [
     },
     leads: [
       {
-        name: "Joshua Gomez",
+        name: "Caleb Van Randwyk",
         role: "Team lead",
-        classOf: "2026",
-        email: "Joshua.Gomez@calbaptist.edu",
+        email: "CalebJohn.VanRandwyk@calbaptist.edu",
       },
     ],
+    channel: "Cybersecurity",
     joinNote:
-      "All skill levels are welcome. Tryouts and practice details are posted in the CCDC channel on Teams.",
+      "All skill levels are welcome. Tryouts and practice details are posted in the Cybersecurity channel on Teams.",
   },
   {
     id: "set",
@@ -119,7 +117,7 @@ export const teams: Team[] = [
     facts: [
       { label: "Team size", value: "About 10 members" },
       { label: "Meets", value: "Mondays, 4:30 to 5:30 PM" },
-      { label: "Where", value: "Room 203" },
+      { label: "Where", value: "TEGR (Engineering Building), Room 203" },
     ],
     highlight: {
       label: "Current projects",
@@ -127,23 +125,17 @@ export const teams: Team[] = [
     },
     leads: [
       {
-        name: "Joshua Gomez",
-        role: "Team lead",
-        classOf: "2026",
-        email: "joshuahernando.gomez@calbaptist.edu",
-      },
-      {
         name: "Andrew Willis",
         role: "Team lead",
-        classOf: "2025",
         email: "AndrewWillis771@outlook.com",
       },
       {
-        name: "Joey Russell",
-        role: "Co-lead, website manager",
-        email: "Josephbernard.russell@calbaptist.edu",
+        name: "Brandon Magana",
+        role: "Team lead",
+        email: "Brandon.Magana@calbaptist.edu",
       },
     ],
+    channel: "SET",
     joinNote:
       "Come to a Monday meeting in Room 203 or say hi in the SET channel on Teams. Beginners get paired with someone on an active project.",
   },
@@ -170,6 +162,7 @@ export const teams: Team[] = [
       { label: "Team size", value: "6 or more members" },
       { label: "Focus", value: "Game development" },
       { label: "Current goal", value: "Game jam placements" },
+      { label: "Meets", value: "Check the Game Dev channel on Teams" },
     ],
     highlight: {
       label: "Mission",
@@ -177,17 +170,12 @@ export const teams: Team[] = [
     },
     leads: [
       {
-        name: "Diego Patterson",
+        name: "Jeremy Freeman",
         role: "Team lead",
-        classOf: "2026",
-        email: "diegochristopher.patterson@calbaptist.edu",
-      },
-      {
-        name: "Darrin Moss",
-        role: "Co-lead",
-        email: "darrinjames.moss@calbaptist.edu",
+        email: "JeremyMatthew.Freeman@calbaptist.edu",
       },
     ],
+    channel: "Game Dev",
     joinNote:
       "The team needs artists, writers, musicians, and programmers, at any skill level.",
   },
